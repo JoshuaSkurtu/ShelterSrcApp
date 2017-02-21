@@ -25,13 +25,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
-//THIS A Tksdajf;lfda
-    //THIS IS ALSO SOME CHANGES TO TEST FUNCTIONALITY!!!!1
+//THIS A
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        
         //icon
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
