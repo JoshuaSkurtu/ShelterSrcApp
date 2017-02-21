@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 //THIS A Tksdajf;lfda
+    //THIS IS ALSO SOME CHANGES TO TEST FUNCTIONALITY!!!!1
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
