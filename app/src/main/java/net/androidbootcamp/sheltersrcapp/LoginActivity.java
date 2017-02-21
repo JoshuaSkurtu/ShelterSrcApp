@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 //THIS A
+    //HAI NEEDS THIS ON HIS PC!!!!
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
