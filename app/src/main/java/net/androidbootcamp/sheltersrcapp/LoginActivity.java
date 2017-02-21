@@ -25,7 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
-//THIS A TEST OF GITHUBS!!!!
+//THIS A Tksdajf;lfda
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
