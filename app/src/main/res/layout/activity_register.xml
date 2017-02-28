@@ -31,6 +31,19 @@
         android:layout_below="@+id/etName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:id="@+id/etLName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Last Name" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/etLName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:id="@+id/etUsername"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -47,7 +60,7 @@
         android:id="@+id/etPassword"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="Password" />
+        android:hint="Password"  />
 
     <EditText
         android:layout_width="wrap_content"
@@ -62,14 +75,5 @@
         android:layout_alignParentEnd="true"
         android:hint="Age" />
 
-    <Button
-        android:text="Register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etAge"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/bRegister"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>
