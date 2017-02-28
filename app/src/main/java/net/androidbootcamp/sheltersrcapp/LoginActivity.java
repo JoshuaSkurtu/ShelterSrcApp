@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
+//comment goes here
         //variables
         final EditText etUsername = (EditText)findViewById(R.id.etUsername);
         final EditText etPassword = (EditText)findViewById(R.id.etPassword);
