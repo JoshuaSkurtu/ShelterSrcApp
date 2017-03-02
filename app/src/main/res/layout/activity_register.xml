@@ -75,5 +75,14 @@
         android:layout_alignParentEnd="true"
         android:hint="Age" />
 
+    <Button
+        android:text="Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etAge"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="92dp"
+        android:id="@+id/bRegister" />
+
 
 </RelativeLayout>
