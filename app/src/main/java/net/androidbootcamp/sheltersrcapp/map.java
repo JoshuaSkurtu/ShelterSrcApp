@@ -11,8 +11,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class map extends FragmentActivity implements OnMapReadyCallback {
-//thisis a comment
-    //hai's commit
+//this is a comment
+    //hai's commit--------------
+
     private GoogleMap mMap;
 
     @Override
