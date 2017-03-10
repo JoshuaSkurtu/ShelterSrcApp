@@ -15,6 +15,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Created by Hai on 2/19/2017.
+ */
+
 public class RegisterActivity extends AppCompatActivity {
 
     @Override
@@ -23,11 +27,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        //Create Logo
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-
+        //Create Java Variables that pull from XML ids that is stored in Java R file - Hai
         final EditText etEmail = (EditText)findViewById(R.id.etEmail);
         final EditText etAge = (EditText) findViewById(R.id.etAge);
         final EditText etName = (EditText) findViewById(R.id.etName);
@@ -37,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText etPassword2 = (EditText) findViewById(R.id.etPassword2);
         final Button bRegister = (Button) findViewById(R.id.bRegister);
 
+        //OnClick Listener for Register Button - Hai
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,11 +56,19 @@ public class RegisterActivity extends AppCompatActivity {
                 final String password = etPassword.getText().toString();
                 final String password2 = etPassword2.getText().toString();
 
+                //Callback interface for delivering parsed responses - Hai
                 Response.Listener<String> responseListener = new Response.Listener<String>(){
                     @Override
+
+                    //Called when a response is received. - Hai
                     public void onResponse(String response) {
                         try {
-                            //gets JSONObject from php file
+                            /*//gets JSONObject from php file
+                            //A modifiable set of name/value mappings.
+                            //When the requested type is a String,
+                            // other non-null values will be coerced using valueOf(Object).
+                            // Although null cannot be coerced,
+                            // the sentinel value NULL is coerced to the string "null" -Hai*/
                             JSONObject jsonResponse = new JSONObject(response);
                             //gets if connection is successful
                             boolean success = jsonResponse.getBoolean("success");
@@ -77,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 };
 
-                //this sends all the data
+                //this sends all the data - Hai
                 RegisterRequest registerRequest = new RegisterRequest(name, lname, username, age, password, password2, email, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
