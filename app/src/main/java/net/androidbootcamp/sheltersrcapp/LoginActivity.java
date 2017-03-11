@@ -44,14 +44,25 @@ public class LoginActivity extends AppCompatActivity {
         final EditText etPassword = (EditText)findViewById(R.id.etPassword);
         final Button bLogin = (Button)findViewById(R.id.bLogin);
         final TextView registerLink = (TextView)findViewById(R.id.tvRegisterHere);
+        final TextView providerLink = (TextView)findViewById(R.id.tvProvider);
 
         //Button for the Register Here - Hai
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //create intent to open activity
+                //create intent to register activity - Hai
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 LoginActivity.this.startActivity(registerIntent);
+            }
+        });
+
+        //Button for Provider Login - Hai
+        providerLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Create intent to open Provider activity
+                Intent providerIntent = new Intent(LoginActivity.this, ProviderAuthenticationActivity.class);
+                LoginActivity.this.startActivity(providerIntent);
             }
         });
 

@@ -40,7 +40,8 @@
 
         <activity
             android:name=".map"
-            android:label="@string/title_activity_map"></activity>
+            android:label="@string/title_activity_map" />
+        <activity android:name=".ProviderAuthenticationActivity"></activity>
     </application>
 
 </manifest>
