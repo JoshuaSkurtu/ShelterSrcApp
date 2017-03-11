@@ -67,7 +67,17 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvRegisterHere"
         android:textSize="30sp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="88dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tvProvider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp"
+        android:text="Provider Login"
+        android:textSize="30sp" />
 </RelativeLayout>
