@@ -16,17 +16,16 @@ public class LoginRequest extends StringRequest {
     private Map<String, String> params;
 
     public LoginRequest(String username, String password, Response.Listener<String> listener) {
-        //Execute request by Method.POST by sending to the Register.php to send data over
+        //Execute request by Method.POST by sending to the Register.php to send data over-Hai
         super(Request.Method.POST, LOGIN_REQUEST_URL, listener, null);
         params = new HashMap<>();
 
-        //put data into HashMap
+        //put data into HashMap-Hai
         params.put("username", username);
         params.put("password", password);
     }
 
-    //When request is executed volley needs to access data
-
+    //When request is executed volley needs to access data-Hai
     @Override
     public Map<String, String> getParams() {
         return params;

@@ -37,11 +37,11 @@ public class ProviderAuthenticationActivity extends AppCompatActivity {
         bProviderLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //get the xml String input-Hai
+                //Create string to grab from database
                 final String code = etCodeNum.getText().toString();
 
                 //Get a response Listener to get information from php-Hai
-                Response.Listener<String> response = new Response.Listener<String>(){
+                Response.Listener<String> responseListener = new Response.Listener<String>(){
 
                     @Override
                     public void onResponse(String response) {
@@ -77,14 +77,12 @@ public class ProviderAuthenticationActivity extends AppCompatActivity {
                     }//end onResponse()-Hai
                 };//end Response.Listener-Hai
 
-                //Makes a request to the server database for username, password information - Hai
-                ProviderLoginRequest providerLoginRequest = new LoginRequest(providerName, providerAddress, shelterNum, food, blanket, soap);
+                //Makes a request to the server database for code information - Hai
+                //Need database to have code info for this to work;
+                ProviderLoginRequest providerLoginRequest = new ProviderLoginRequest(code, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(ProviderAuthenticationActivity.this);
                 queue.add(providerLoginRequest);
 
-//                LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
-//                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-//                queue.add(loginRequest);
             }//end onClick(View v)-Hai
 
         });//end new Button onclick()-Hai
