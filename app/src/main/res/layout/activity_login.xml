@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvRegisterHere"
         android:textSize="30sp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="106dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -80,4 +80,15 @@
         android:layout_marginTop="60dp"
         android:text="Provider Login"
         android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/bGuestLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProvider"
+        android:text="Guest Login"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

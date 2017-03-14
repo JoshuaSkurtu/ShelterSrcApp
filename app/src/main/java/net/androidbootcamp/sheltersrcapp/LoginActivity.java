@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText etUsername = (EditText)findViewById(R.id.etUsername);
         final EditText etPassword = (EditText)findViewById(R.id.etPassword);
         final Button bLogin = (Button)findViewById(R.id.bLogin);
+        final Button bGuestLogin = (Button)findViewById(R.id.bGuestLogin);
         final TextView registerLink = (TextView)findViewById(R.id.tvRegisterHere);
         final TextView providerLink = (TextView)findViewById(R.id.tvProvider);
 
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
         //Button for Provider Login - Hai
         providerLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +67,15 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.startActivity(providerIntent);
             }
         });
+        //adding guest login button- josh
 
+        bGuestLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent guestIntent = new Intent(LoginActivity.this, map.class );
+                        LoginActivity.this.startActivity(guestIntent);
+            }
+        });
         //Button for Login - Hai
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
