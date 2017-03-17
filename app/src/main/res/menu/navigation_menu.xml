@@ -25,13 +25,12 @@
     <item
         android:id="@+id/zip_search"
         android:actionViewClass="android.support.v7.widget.SearchView"
+        android:enabled="true"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="Zip"
-        android:visible="true"
-        android:checkable="false"
-        android:enabled="true" />
+        android:visible="true" />
     <item android:id="@+id/nav_settings"
-        android:title ="Settings" />
+        android:title ="Search" />
     <item android:id="@+id/nav_exit"
         android:title ="Exit" />
 </menu>
