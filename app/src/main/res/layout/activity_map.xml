@@ -1,4 +1,5 @@
 <!--  adding this section to map layout to add drawer - Josh-->
+
 <android.support.v4.widget.DrawerLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,18 +9,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".map"
     android:id="@+id/drawerLayout">
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <Button
+                android:id="@+id/searchButton"
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                android:text="@android:string/search_go"
+                android:onClick="onSearch" />
+
+
+        <EditText
+        android:id="@+id/TFaddress"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+
+        android:text="63303" />
+    android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="521dp"
+            tools:context="*.map" />
+
+
+    </LinearLayout>
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/map"
-        tools:context="*.map"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
-            <android.support.design.widget.NavigationView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:menu="@menu/navigation_menu"
-                android:layout_gravity="start"
-                app:headerLayout="@layout/navigation_header">
-            </android.support.design.widget.NavigationView>
+        app:menu="@menu/navigation_menu"
+        android:layout_gravity="start">
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

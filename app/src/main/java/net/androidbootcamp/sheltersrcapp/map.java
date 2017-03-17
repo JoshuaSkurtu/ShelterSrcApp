@@ -80,9 +80,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
             super.onBackPressed();
         }
     }
-
+//add ability to search on map
     public void onSearch(View view) throws IOException {
-        EditText location_new = (EditText)findViewById(R.id.zip_search);
+        EditText location_new = (EditText)findViewById(R.id.TFaddress);
         String location = location_new.getText().toString();
         List<Address> addressList = null;
         if(location != null || !location.equals("") )
