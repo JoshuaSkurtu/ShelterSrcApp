@@ -6,4 +6,41 @@
     android:layout_height="match_parent"
     tools:context="net.androidbootcamp.sheltersrcapp.ProviderAreaActivity">
 
+    <Button
+        android:id="@+id/bBedsAvailable"
+        android:layout_width="101dp"
+        android:layout_height="59dp"
+        android:text="Update"
+        tools:layout_editor_absoluteX="141dp"
+        tools:layout_editor_absoluteY="133dp" />
+
+    <TextView
+        android:id="@+id/textBedUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Beds Available Currently"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="26dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="110dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="0"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="137dp"
+        tools:layout_editor_absoluteY="63dp" />
+
+    <Button
+        android:id="@+id/bProviderUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Provider Page"
+        tools:layout_editor_absoluteX="99dp"
+        tools:layout_editor_absoluteY="430dp" />
+
 </android.support.constraint.ConstraintLayout>
