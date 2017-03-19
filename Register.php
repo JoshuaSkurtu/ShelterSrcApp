@@ -1,5 +1,4 @@
 <?php
-    require("password.php");
     $dbuser = "id755973_client";
     $password = "abc123";
     $databaseName = "id755973_sheltersrcapp";
@@ -16,7 +15,7 @@
 
 
     function checkAge($a){
-       if($a > 9 && $a < 106){
+       if($a > 12 && $a < 106){
           return true;
        } else{
           return false;
@@ -24,7 +23,7 @@
     }
 
     function checkPassword($pw1, $pw2){
-       if(($pw1==$pw2) && (strlen($pw1)>4)){
+       if(($pw1==$pw2) && (strlen($pw1)>6)){
           return true;
        } else{
           return false;
@@ -41,7 +40,7 @@
 
     function registerUser() {
         global $connect, $name, $age, $username, $password, $lname, $email;
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        $passwordHash = password_hash($password, PASSWORD_BCRYPT);
         $statement = mysqli_prepare($connect, "INSERT INTO user (name, lname, username, age, password, email) VALUES (?, ?, ?, ?,?,?)");
         mysqli_stmt_bind_param($statement, "sssiss", $name, $lname, $username, $age, $passwordHash, $email);
         mysqli_stmt_execute($statement);
