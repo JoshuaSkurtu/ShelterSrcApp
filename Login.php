@@ -1,5 +1,4 @@
 <?php
-
     $dbuser = "id755973_client";
     $password = "abc123";
     $databaseName = "id755973_sheltersrcapp";
