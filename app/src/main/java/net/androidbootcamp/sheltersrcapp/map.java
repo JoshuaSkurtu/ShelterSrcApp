@@ -1,12 +1,17 @@
 package net.androidbootcamp.sheltersrcapp;
 
 import android.Manifest;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
+
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.design.widget.FloatingActionButton;
@@ -33,12 +38,18 @@ import android.widget.EditText;
 import java.io.IOException;
 import java.util.List;
 
+import static net.androidbootcamp.sheltersrcapp.R.id.bGuestLogin;
+
 public class map extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    FragmentTransaction fragmentTransaction;
+    NavigationView navigationView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +67,26 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //This section for making navigation menu buttons and switches work - Josh
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.navLogin:
+                        Intent loginIntent = new Intent(map.this, LoginActivity.class);
+
+                        map.this.startActivity(loginIntent);
+
+
+                }
+
+
+                return false;
+            }
+        });
+
 
     }
 

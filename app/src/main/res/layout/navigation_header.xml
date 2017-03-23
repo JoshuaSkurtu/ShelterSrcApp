@@ -10,13 +10,13 @@
         android:id="@+id/navText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Header Navigation"
-        android:textColor="?attr/colorButtonNormal"
-        android:textSize="18sp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="13dp" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Navigation"
+        android:textColor="?attr/colorButtonNormal"
+        android:textSize="18sp" />
 </RelativeLayout>

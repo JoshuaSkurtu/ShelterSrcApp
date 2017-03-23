@@ -1,36 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/nav_account"
-        android:title ="My Account" />
+    <item
+        android:id="@+id/housingSwitch"
+        android:title="Housing"
+        app:actionLayout="@layout/switch_item" />
+    <item
+        android:id="@+id/foodSwitch"
+        android:title="Food Pantries"
+        app:actionLayout="@layout/switch_item" />
+    <item
+        android:id="@+id/clothingSwitch"
+        android:title="Clothing/Supplies"
+        app:actionLayout="@layout/switch_item" />
+    <item
+        android:id="@+id/navLogin"
+        android:title="Login/Out" />
     <group android:id="@+id/gFilters"
         android:visible="true"
-        android:enabled="true">
-        <item android:title="Food Pantries"
-            android:id="@+id/mFoodPantries"
-            android:checkable="true"
-            android:enabled="true"
-            android:visible="true" />
-        <item android:title="Housing"
-            android:id="@+id/mHousing"
-            android:checkable="true"
-            android:enabled="true"
-            android:visible="true" />
-        <item android:title="Clothing / Supplies"
-            android:id="@+id/mClothingSupplies"
-            android:checkable="true"
-            android:enabled="true"
-            android:visible="true" />
-    </group>
-    <item
-        android:id="@+id/zip_search"
-        android:actionViewClass="android.support.v7.widget.SearchView"
-        android:enabled="true"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="Zip"
-        android:visible="true" />
-    <item android:id="@+id/nav_settings"
-        android:title ="Search" />
+        android:enabled="true"></group>
     <item android:id="@+id/nav_exit"
         android:title ="Exit" />
 </menu>

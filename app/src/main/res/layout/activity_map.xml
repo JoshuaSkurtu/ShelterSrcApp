@@ -8,7 +8,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".map"
-    android:id="@+id/drawerLayout">
+    android:id="@+id/drawerLayout"
+    tools:openDrawer="end">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,6 +47,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:menu="@menu/navigation_menu"
-        android:layout_gravity="start">
+        android:id="@+id/navigation_view"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header">
     </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

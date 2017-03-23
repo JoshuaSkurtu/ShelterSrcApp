@@ -25,15 +25,15 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //New code to add drawer
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.volley:volley:1.0.0'
     //removed next line to try to fix version error and added map and location instead of bundle. commented out so we can retrieve if needed. - Josh-
     //compile 'com.google.android.gms:play-services:10.2.0'
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.volley:volley:1.0.0'
     compile 'com.google.android.gms:play-services-location:10.2.0'
     compile 'com.google.android.gms:play-services-maps:10.2.0'
     compile 'com.android.support:design:25.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:support-v4:25.2.0'
     compile 'com.android.support:support-v13:25.2.0'
+    testCompile 'junit:junit:4.12'
 }
