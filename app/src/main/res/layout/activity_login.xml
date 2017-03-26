@@ -11,84 +11,100 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="net.androidbootcamp.sheltersrcapp.LoginActivity">
 
-    <Button
-        android:text="Login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bLogin"
-        android:textSize="18sp"
-        android:background="#0000ff"
-        android:textColor="@android:color/background_light"
-        android:layout_above="@+id/tvRegisterHere"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="29dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/etUsername"
-        android:hint="Username"
-        android:layout_above="@+id/etPassword"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <ImageView
-        app:srcCompat="@drawable/homes"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/imageView"
-        android:layout_above="@+id/etUsername"
-        android:layout_height="150dp"
-        android:layout_width="320dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/etPassword"
-        android:hint="Password"
-        android:layout_above="@+id/bLogin"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true">
 
-    <TextView
-        android:text="Register Here"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvRegisterHere"
-        android:textSize="30sp"
-        android:layout_marginBottom="106dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tvProvider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bLogin"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:text="Provider Login"
-        android:textSize="30sp" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="320dp"
+                android:layout_height="200dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/homes" />
 
-    <Button
-        android:id="@+id/bGuestLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvProvider"
-        android:text="Guest Login"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/imageView"
+                android:ems="10"
+                android:id="@+id/etUsername"
+                android:hint="Username"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/etPassword"
+                android:hint="Password"
+                android:layout_below="@+id/etUsername"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:text="Login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bLogin"
+                android:textSize="18sp"
+                android:background="#0000ff"
+                android:textColor="@android:color/background_light"
+                android:layout_below="@+id/etPassword"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:id="@+id/bGuestLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bLogin"
+                android:textSize="18sp"
+                android:text="Guest Login"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:id="@+id/tvRegisterHere"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bGuestLogin"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="Register Here"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tvProvider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvRegisterHere"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="Provider Login"
+                android:textSize="30sp" />
+
+
+
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
