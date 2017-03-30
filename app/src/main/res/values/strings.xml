@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">ShelterSrcApp</string>
     <string name="title_activity_map">Map</string>
+    <string name="pw_criteria">
+        Requirements for registration:
+        Username has to be more than 5 characters and unique.
+        Password must match and has to be more than 7 characters.
+        Email has to have @example.com
+    </string>
     <string name="open">Open</string>
     <string name="close">Close</string>
 
