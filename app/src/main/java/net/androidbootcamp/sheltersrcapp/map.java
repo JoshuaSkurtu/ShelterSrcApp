@@ -51,15 +51,18 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
     private ActionBarDrawerToggle mToggle;
     FragmentTransaction fragmentTransaction;
     NavigationView navigationView;
-    private List<Marker> markers = new ArrayList<>();
 
-//function needed that populates marker list below based on locations we have in the database in a whileloop maybe. we shall see. -Still need to test the below functions by just adding a location to the list manually, then we can loop.
-    public void markerCreation(LatLng yourPosition) //use this method to add a marker to the list - starts hidden - josh
+
+
+//function needed that populates marker list below based on locations we have in the database in a whileloop maybe
+
+    public void markerCreation(LatLng yourPosition, List<Marker> markers, String fTitle) //use this method to add a marker to the list - starts hidden - josh
         {
-            Marker marker = mMap.addMarker(new MarkerOptions().position(yourPosition).visible(false));
-            markers.add(marker);
+            Marker fMarker = mMap.addMarker(new MarkerOptions().position(yourPosition).visible(false).title(fTitle));
+            markers.add(fMarker);
         }
-    public void showMarkers(LatLng location, float distance) //This then reveals any markers in the range you choose nearby the location - josh
+
+    public void showMarkers(LatLng location, float distance, List<Marker> markers) //This then reveals any markers in the range you choose nearby the location - josh
     {
 
         for(Marker marker : markers){
@@ -97,6 +100,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_map);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -143,16 +147,24 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
 
         return super.onOptionsItemSelected(item);
     }
-
+    public void onMapUpdate(){
+        mMap.clear(); //clear 
+        List<Marker> markerList = new ArrayList<>();
+        LatLng testLatLng =  new LatLng(38,-90);
+        markerCreation(testLatLng, markerList, "Test Title Field for New Marker");
+        showMarkers(testLatLng,200, markerList);
+    }
     //makes back buton close drawer - Josh
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+        onMapUpdate();
     }
 //add ability to search on map - josh
     public void onSearch(View view) throws IOException {
@@ -173,8 +185,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
            }
            Address address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+            mMap.addMarker(new MarkerOptions().position(latLng).title("Search"));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            onMapUpdate();
 
         }
 
