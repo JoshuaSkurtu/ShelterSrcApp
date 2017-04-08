@@ -1,6 +1,7 @@
 package net.androidbootcamp.sheltersrcapp;
 
 import android.Manifest;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.support.design.widget.Snackbar;
@@ -36,6 +38,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static net.androidbootcamp.sheltersrcapp.R.id.bGuestLogin;
@@ -51,9 +54,53 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
 
 
 
+//function needed that populates marker list below based on locations we have in the database in a whileloop maybe
+
+    public void markerCreation(LatLng yourPosition, List<Marker> markers, String fTitle) //use this method to add a marker to the list - starts hidden - josh
+        {
+            Marker fMarker = mMap.addMarker(new MarkerOptions().position(yourPosition).visible(false).title(fTitle));
+            markers.add(fMarker);
+        }
+
+    public void showMarkers(LatLng location, float distance, List<Marker> markers) //This then reveals any markers in the range you choose nearby the location - josh
+    {
+
+        for(Marker marker : markers){
+                    LatLng mLocation = marker.getPosition();
+                if(distance(location.latitude,location.longitude, mLocation.latitude,mLocation.longitude)<=distance) //we find distance between two pts to reveal only markers near usS
+                marker.setVisible(true);
+
+            else{
+                marker.setVisible(false);
+            }
+
+        }
+
+    }
+
+    private double distance(double latitude, double longitude, double latitude1, double longitude1) {
+       //calculates distance between two latlon points - Josh
+        final int R = 6371;
+
+        Double latDistance = Math.toRadians(latitude-latitude1);
+        Double lonDistance = Math.toRadians(longitude-longitude1);
+        Double a = Math.sin(latDistance/2)*Math.sin(latDistance/2)
+                +Math.cos(Math.toRadians(latitude))*Math.cos(Math.toRadians(latitude1))
+                * Math.sin(lonDistance/2) * Math.sin(lonDistance/2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double distance = R * c * 1000;
+
+        //double height = 0; //not needed - josh
+
+        distance = Math.pow(distance,2); //redundant, because we sqrt, but keeping other part if you were to calculate elevation (+Math.pow(height,2);)
+
+        return Math.sqrt(distance);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_map);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -100,35 +147,47 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
 
         return super.onOptionsItemSelected(item);
     }
-
+    public void onMapUpdate(){
+        mMap.clear(); //clear 
+        List<Marker> markerList = new ArrayList<>();
+        LatLng testLatLng =  new LatLng(38,-90);
+        markerCreation(testLatLng, markerList, "Test Title Field for New Marker");
+        showMarkers(testLatLng,200, markerList);
+    }
     //makes back buton close drawer - Josh
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+        onMapUpdate();
     }
-//add ability to search on map
+//add ability to search on map - josh
     public void onSearch(View view) throws IOException {
+        mMap.clear(); // Clears all previous markers on map
         EditText location_new = (EditText)findViewById(R.id.TFaddress);
         String location = location_new.getText().toString();
         List<Address> addressList = null;
         if(location != null || !location.equals("") )
         {
             Geocoder geocoder = new Geocoder(this);
+
            try {
               addressList = geocoder.getFromLocationName(location, 1);
+               //if(geocoder.isPresent()){}
            }
            catch(IOException e){
                e.printStackTrace();
            }
            Address address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+            mMap.addMarker(new MarkerOptions().position(latLng).title("Search"));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            onMapUpdate();
 
         }
 
