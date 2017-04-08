@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.androidbootcamp.sheltersrcapp.Test">
+
+    <Button
+        android:id="@+id/getJson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:text="Get Json"
+        android:onClick="getJSON"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/parseJson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/getJson"
+        android:layout_alignStart="@+id/getJson"
+        android:layout_below="@+id/getJson"
+        android:layout_marginTop="19dp"
+        android:text="Parse Json"
+        android:onClick="parseJSON"/>
+
+    <TextView
+        android:id="@+id/jsonAppear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/parseJson"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp"
+        android:text="JSON will show here" />
+</RelativeLayout>

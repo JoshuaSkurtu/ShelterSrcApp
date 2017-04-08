@@ -42,7 +42,8 @@
             android:name=".map"
             android:label="@string/title_activity_map" />
         <activity android:name=".ProviderAuthenticationActivity" />
-        <activity android:name=".ProviderAreaActivity"></activity>
+        <activity android:name=".ProviderAreaActivity" />
+        <activity android:name=".Test"></activity>
     </application>
 
 </manifest>

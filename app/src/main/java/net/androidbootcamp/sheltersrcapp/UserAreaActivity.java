@@ -12,24 +12,20 @@ import android.widget.TextView;
 
 public class UserAreaActivity extends AppCompatActivity {
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
 
-        //icon - Hai
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        //variables for displaying username, age, and Welcome message - Hai
         final EditText etUsername = (EditText)findViewById(R.id.etUsername);
         final EditText etAge = (EditText)findViewById(R.id.etAge);
         final TextView welcomeMessage = (TextView)findViewById(R.id.tvWelcomeMsg);
 
-        //getIntent grabs the data from intent.putExtra from last LoginActivity - Hai
+        //
         Intent intent = getIntent();
-        //intent.getStringExtra grabs all the names from other LoginActivity
         String name = intent.getStringExtra("name");
         String username = intent.getStringExtra("username");
         int age = intent.getIntExtra("age", -1);
@@ -39,4 +35,5 @@ public class UserAreaActivity extends AppCompatActivity {
         etUsername.setText(username);
         etAge.setText(age + "");
     }
+
 }

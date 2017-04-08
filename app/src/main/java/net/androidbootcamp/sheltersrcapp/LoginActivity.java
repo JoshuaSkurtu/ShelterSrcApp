@@ -96,15 +96,15 @@ public class LoginActivity extends AppCompatActivity {
                                 String name = jsonResponse.getString("name");
                                 int age = jsonResponse.getInt("age");
 
-                                /*
-                                Kept code, modifying so that login takes the user to map screen.
-                                // make intent to go to UserAreaActivity
-                                Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
 
-                                //intent is connected to the getIntent() method-Hai
-                                intent.putExtra("name", name);
-                                intent.putExtra("username", username);
-                                intent.putExtra("age", age);*/
+                                //Kept code, modifying so that login takes the user to map screen.
+                                // make intent to go to UserAreaActivity
+//                                Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
+//
+//                                //intent is connected to the getIntent() method-Hai
+//                                intent.putExtra("name", name);
+//                                intent.putExtra("username", username);
+//                                intent.putExtra("age", age);
 
                                 Intent intent = new Intent(LoginActivity.this, map.class);
 
