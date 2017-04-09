@@ -23,7 +23,7 @@ public class ProviderLoginRequest extends StringRequest{
 
     public ProviderLoginRequest(String code,
                                 Response.Listener<String> listener) {
-        //Execute request by Method.POST by sending to the Register.php to send data over-Hai
+        //Execute request by Method.POST by sending to the providerLogin.php to send data over-Hai
         super(Request.Method.POST, PROVLOGIN_REQUEST_URL, listener, null);
         //Creates object hashmap for container-Hai
         params = new HashMap<>();

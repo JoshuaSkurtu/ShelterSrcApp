@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
 //
 //                                //intent is connected to the getIntent() method-Hai
-                                    //passes this data to be used in intent on intent specified activity
+                                  //passes this data to be used in intent on intent specified activity
 //                                intent.putExtra("name", name);
 //                                intent.putExtra("username", username);
 //                                intent.putExtra("age", age);

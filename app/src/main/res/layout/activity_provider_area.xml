@@ -17,24 +17,25 @@
         android:text="Welcome"
         android:textSize="24sp" />
 
-    <EditText
+    <TextView
+        android:id="@+id/tvAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/tvWelcome"
         android:ems="10"
-        android:id="@+id/etAddress"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:gravity="center_horizontal"
+        android:inputType="textPersonName" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/etAddress">
+        android:layout_below="@+id/tvAddress">
 
         <RelativeLayout
             android:layout_width="match_parent"
