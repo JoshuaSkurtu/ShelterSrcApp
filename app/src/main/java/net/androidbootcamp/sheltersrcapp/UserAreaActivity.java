@@ -20,11 +20,12 @@ public class UserAreaActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
+        //instantiates the editText from xml to be filled with information from json response - Hai
         final EditText etUsername = (EditText)findViewById(R.id.etUsername);
         final EditText etAge = (EditText)findViewById(R.id.etAge);
         final TextView welcomeMessage = (TextView)findViewById(R.id.tvWelcomeMsg);
 
-        //
+        //gets intent information from previous page that pulled from response of php - Hai
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String username = intent.getStringExtra("username");
@@ -32,6 +33,7 @@ public class UserAreaActivity extends AppCompatActivity {
 
         String message = name + ", welcome to your user area";
         welcomeMessage.setText(message);
+        //sets the editText with the filled data from intent - Hai
         etUsername.setText(username);
         etAge.setText(age + "");
     }

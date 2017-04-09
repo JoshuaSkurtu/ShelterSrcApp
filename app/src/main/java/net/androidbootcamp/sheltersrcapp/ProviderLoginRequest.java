@@ -17,8 +17,8 @@ Still need to write notepad to write to database for this to work;
  */
 
 public class ProviderLoginRequest extends StringRequest{
-    //Creates url string that connects to web domain provLogin.php-Hai
-    private static final String PROVLOGIN_REQUEST_URL = "https://haitphan.000webhostapp.com/provLogin.php";
+    //Creates url string that connects to web domain providerLogin.php-Hai
+    private static final String PROVLOGIN_REQUEST_URL = "https://haitphan.000webhostapp.com/providerLogin.php";
     private Map<String, String> params;
 
     public ProviderLoginRequest(String code,
@@ -29,7 +29,8 @@ public class ProviderLoginRequest extends StringRequest{
         params = new HashMap<>();
 
         //put data into HashMap-Hai
-        params.put("provider_name", code);
+        //Data is used to be passed to providerLogin.php
+        params.put("code", code);
     }
     //When request is executed volley needs to access data-Hai
 

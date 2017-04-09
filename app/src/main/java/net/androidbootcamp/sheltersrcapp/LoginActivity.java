@@ -77,22 +77,26 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         //Button for Login - Hai
+        //Everything happens after request and button pressed - Hai
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String username= etUsername.getText().toString();
                 final String password = etPassword.getText().toString();
 
+                //creates response listener to send to LoginRequest - Hai
                 Response.Listener<String> responseListener = new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response) {
                         try {
-                            //gathering data from json -Hai
+                            //gathering data from response Listener to json -Hai
                             JSONObject jsonResponse = new JSONObject(response);
+                            //Sent from php file
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success){
                                 //gets the json reponse that we got in the login.php -Hai
+                                //This is from the mysqli_stmt_fetch($statement) from login.php
                                 String name = jsonResponse.getString("name");
                                 int age = jsonResponse.getInt("age");
 
@@ -102,10 +106,12 @@ public class LoginActivity extends AppCompatActivity {
 //                                Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
 //
 //                                //intent is connected to the getIntent() method-Hai
+                                    //passes this data to be used in intent on intent specified activity
 //                                intent.putExtra("name", name);
 //                                intent.putExtra("username", username);
 //                                intent.putExtra("age", age);
 
+                                //takes to another activity, in this case map.class - Hai
                                 Intent intent = new Intent(LoginActivity.this, map.class);
 
 
@@ -127,7 +133,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 };
 
-                //Makes a request to the server database for username, password information - Hai
+                //Makes a LoginRequest to the server database for username, password information - Hai
+                //Uses the LoginRequest Constructor from LoginRequest.java - Hai
                 LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);

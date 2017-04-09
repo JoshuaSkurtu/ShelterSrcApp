@@ -37,7 +37,7 @@ public class ProviderAuthenticationActivity extends AppCompatActivity {
         bProviderLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Create string to grab from database
+                //Grab the code from android to confirm match on the database - Hai
                 final String code = etCodeNum.getText().toString();
 
                 //Get a response Listener to get information from php-Hai

@@ -12,15 +12,20 @@ import java.util.Map;
  */
 
 public class LoginRequest extends StringRequest {
+    //gets url from website to access the php - Hai
     private static final String LOGIN_REQUEST_URL = "https://haitphan.000webhostapp.com/Login.php";
     private Map<String, String> params;
 
+    //Only need username and password to check on database - Hai
+    //LoginRequest is Constructor to ask for username and password to send to php - Hai
+    //This constructor is used by the LoginActivity.java - Hai
     public LoginRequest(String username, String password, Response.Listener<String> listener) {
-        //Execute request by Method.POST by sending to the Register.php to send data over-Hai
+        //Execute request by Method.POST by sending to the Login.php to send data over-Hai
         super(Request.Method.POST, LOGIN_REQUEST_URL, listener, null);
         params = new HashMap<>();
 
         //put data into HashMap-Hai
+        //This data is passed to the Login.php
         params.put("username", username);
         params.put("password", password);
     }
