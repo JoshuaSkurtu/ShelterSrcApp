@@ -1,46 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="net.androidbootcamp.sheltersrcapp.ProviderAreaActivity">
 
-    <Button
-        android:id="@+id/bBedsAvailable"
-        android:layout_width="101dp"
-        android:layout_height="59dp"
-        android:text="Update"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="133dp" />
 
     <TextView
-        android:id="@+id/textBedUpdate"
+        android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Beds Available Currently"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="96dp"
-        tools:layout_editor_absoluteY="26dp" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Welcome"
+        android:textSize="24sp" />
 
     <EditText
-        android:id="@+id/editText2"
-        android:layout_width="110dp"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:inputType="number"
-        android:text="0"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="63dp" />
-
-    <Button
-        android:id="@+id/bProviderUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Update Provider Page"
-        tools:layout_editor_absoluteX="99dp"
-        tools:layout_editor_absoluteY="430dp" />
+        android:inputType="textPersonName"
+        android:layout_below="@+id/tvWelcome"
+        android:ems="10"
+        android:id="@+id/etAddress"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-</android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/etAddress">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+
+            <EditText
+                android:id="@+id/etHousingNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:id="@+id/etHousing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etHousingNumber"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:id="@+id/etFood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etHousing"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+            <EditText
+                android:id="@+id/etClothing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etFood"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:id="@+id/btnUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/etClothing"
+                android:layout_centerHorizontal="true"
+                android:text="Update Housing Number"
+                android:textSize="24sp" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
