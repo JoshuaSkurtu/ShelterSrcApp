@@ -52,15 +52,25 @@ public class ProviderAuthenticationActivity extends AppCompatActivity {
 
                             if(success){
                                 //gets the json reponse that we got in the providerLogin.php -Hai
-                                String providerName = jsonResponse.getString("provider_name");
-                                String providerAddress = jsonResponse.getString("provider_address");
-                                int house_number = jsonResponse.getInt("shelter_number");
+                                String provider_name = jsonResponse.getString("provider_name");
+                                String provider_address = jsonResponse.getString("provider_address");
+                                int housing_number = jsonResponse.getInt("housing_number");
+                                boolean housing = jsonResponse.getBoolean("housing");
                                 boolean food = jsonResponse.getBoolean("food");
-                                boolean blanket = jsonResponse.getBoolean("blanket");
-                                boolean soap = jsonResponse.getBoolean("soap");
+                                boolean clothing = jsonResponse.getBoolean("clothing");
 
                                 //creates intent to move to providerAreaActivity-Hai
                                 Intent intent = new Intent(ProviderAuthenticationActivity.this, ProviderAreaActivity.class);
+
+                                //puts data so it can be used on next page - Hai
+                                intent.putExtra("provider_name", provider_name);
+                                intent.putExtra("provider_address", provider_address);
+                                intent.putExtra("housing_number", housing_number);
+                                intent.putExtra("housing", housing);
+                                intent.putExtra("food", food);
+                                intent.putExtra("clothing", clothing);
+
+                                //Moves to next activity page - Hai
                                 ProviderAuthenticationActivity.this.startActivity(intent);
 
                             }else{
