@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.design.widget.FloatingActionButton;
 
+import com.android.volley.Response;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,6 +37,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,7 +66,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
 
     public void markerCreation(LatLng yourPosition, String fTitle) //use this method to add a marker to the list - starts hidden - josh
         {
-            Marker fMarker = mMap.addMarker(new MarkerOptions().position(yourPosition).visible(false).title(fTitle));
+            Marker fMarker = mMap.addMarker(new MarkerOptions().position(yourPosition).visible(true).title(fTitle));
             markerList.add(0, fMarker);
         }
 
@@ -154,14 +157,26 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
 
         return super.onOptionsItemSelected(item);
     }
+
     public void onMapUpdate(){
         mMap.clear(); //clear
+        //private static final String LOGIN_REQUEST_URL = "https://haitphan.000webhostapp.com/Login.php";
+
+    //Put Json here
+
+       //create variables containing these:
+        //string providerName=
+        //string providerAddress=
+        //int housingAvail=
+        //bool housingBool=
+        //bool foodBool =
+        //bool clothingBool =
 
         LatLng testLatLng =  new LatLng(38,-90);
         markerCreation(testLatLng,"Test Title Field for New Marker");
         LatLng new1 =  new LatLng(38.01,-90.01);
         markerCreation(new1, "ABC Shelter");
-        LatLng new2 =  new LatLng(38.3,-90.5);
+        LatLng new2 =  new LatLng(38.7760,-90.5287);
         markerCreation(new2, "Food Pantry Alpha");
         LatLng new3 =  new LatLng(37.8,-89.33);
         markerCreation(new3, "three");
@@ -169,7 +184,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
         markerCreation(new4, "four");
         LatLng new5 =  new LatLng(32,-90);
         markerCreation(new5, "five");
-        showMarkers(testLatLng,2000);
+
     }
 
     //makes back buton close drawer - Josh
@@ -206,6 +221,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
             mMap.addMarker(new MarkerOptions().position(latLng).title("Search"));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             onMapUpdate();
+            showMarkers(latLng,200000);
 
         }
 
