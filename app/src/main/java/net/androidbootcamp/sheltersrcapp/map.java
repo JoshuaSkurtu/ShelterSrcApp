@@ -51,21 +51,26 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
     private ActionBarDrawerToggle mToggle;
     FragmentTransaction fragmentTransaction;
     NavigationView navigationView;
+    public static List<Marker> markerList = new ArrayList<>();
+
+
+
+
 
 
 
 //function needed that populates marker list below based on locations we have in the database in a whileloop maybe
 
-    public void markerCreation(LatLng yourPosition, List<Marker> markers, String fTitle) //use this method to add a marker to the list - starts hidden - josh
+    public void markerCreation(LatLng yourPosition, String fTitle) //use this method to add a marker to the list - starts hidden - josh
         {
             Marker fMarker = mMap.addMarker(new MarkerOptions().position(yourPosition).visible(false).title(fTitle));
-            markers.add(fMarker);
+            markerList.add(0, fMarker);
         }
 
-    public void showMarkers(LatLng location, float distance, List<Marker> markers) //This then reveals any markers in the range you choose nearby the location - josh
+    public void showMarkers(LatLng location, float distance) //This then reveals any markers in the range you choose nearby the location - josh
     {
 
-        for(Marker marker : markers){
+        for(Marker marker : markerList){
                     LatLng mLocation = marker.getPosition();
                 if(distance(location.latitude,location.longitude, mLocation.latitude,mLocation.longitude)<=distance) //we find distance between two pts to reveal only markers near usS
                 marker.setVisible(true);
@@ -130,6 +135,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
                 }
 
 
+
+
                 return false;
             }
         });
@@ -148,12 +155,23 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
         return super.onOptionsItemSelected(item);
     }
     public void onMapUpdate(){
-        mMap.clear(); //clear 
-        List<Marker> markerList = new ArrayList<>();
+        mMap.clear(); //clear
+
         LatLng testLatLng =  new LatLng(38,-90);
-        markerCreation(testLatLng, markerList, "Test Title Field for New Marker");
-        showMarkers(testLatLng,200, markerList);
+        markerCreation(testLatLng,"Test Title Field for New Marker");
+        LatLng new1 =  new LatLng(38.01,-90.01);
+        markerCreation(new1, "ABC Shelter");
+        LatLng new2 =  new LatLng(38.3,-90.5);
+        markerCreation(new2, "Food Pantry Alpha");
+        LatLng new3 =  new LatLng(37.8,-89.33);
+        markerCreation(new3, "three");
+        LatLng new4 =  new LatLng(38.9,-91);
+        markerCreation(new4, "four");
+        LatLng new5 =  new LatLng(32,-90);
+        markerCreation(new5, "five");
+        showMarkers(testLatLng,2000);
     }
+
     //makes back buton close drawer - Josh
     @Override
     public void onBackPressed() {
@@ -164,7 +182,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
         } else {
             super.onBackPressed();
         }
-        onMapUpdate();
+
     }
 //add ability to search on map - josh
     public void onSearch(View view) throws IOException {
