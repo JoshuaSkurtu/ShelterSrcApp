@@ -21,9 +21,9 @@ public class ProviderAreaActivity extends AppCompatActivity {
         //Grab the textView message and Editext from xml - Hai
         //to edit with response from ProviderAuthenticationActivity.java using intent from intent.putExtra - Hai
         final EditText etHousingNumber = (EditText)findViewById(R.id.etHousingNumber);
-//        final EditText etHousing = (EditText)findViewById(R.id.etHousing);
-//        final EditText etFood = (EditText)findViewById(R.id.etFood);
-//        final EditText etClothing = (EditText)findViewById(R.id.etClothing);
+        final EditText etHousing = (EditText)findViewById(R.id.etHousing);
+        final EditText etFood = (EditText)findViewById(R.id.etFood);
+        final EditText etClothing = (EditText)findViewById(R.id.etClothing);
         final TextView tvWelcome = (TextView)findViewById(R.id.tvWelcome);
         final TextView tvAddress = (TextView)findViewById(R.id.tvAddress);
 
@@ -34,16 +34,16 @@ public class ProviderAreaActivity extends AppCompatActivity {
         String providerName = intent.getStringExtra("provider_name");
         String providerAddress = intent.getStringExtra("provider_address");
         int housingNumber = intent.getIntExtra("housing_number", -1);
-        String housing = intent.getStringExtra("housing");
-        String food = intent.getStringExtra("food");
-        String clothing = intent.getStringExtra("clothing");
+        int housing = intent.getIntExtra("housing",-1);
+        int food = intent.getIntExtra("food", -1);
+        int clothing = intent.getIntExtra("clothing", -1);
 
         String welcome = "Welcome " + providerName;
         tvWelcome.setText(welcome);
         tvAddress.setText(providerAddress);
         etHousingNumber.setText(housingNumber + "");
-//        etHousing.setText(housing);
-//        etFood.setText(food);
-//        etClothing.setText(clothing);
+        etHousing.setText(housing + "");
+        etFood.setText(food + "");
+        etClothing.setText(clothing + "");
     }
 }

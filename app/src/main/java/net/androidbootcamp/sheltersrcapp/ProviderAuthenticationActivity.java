@@ -55,9 +55,9 @@ public class ProviderAuthenticationActivity extends AppCompatActivity {
                                 String provider_name = jsonResponse.getString("provider_name");
                                 String provider_address = jsonResponse.getString("provider_address");
                                 int housing_number = jsonResponse.getInt("housing_number");
-//                                boolean housing = jsonResponse.getBoolean("housing");
-//                                boolean food = jsonResponse.getBoolean("food");
-//                                boolean clothing = jsonResponse.getBoolean("clothing");
+                                int housing = jsonResponse.getInt("housing");
+                                int food = jsonResponse.getInt("food");
+                                int clothing = jsonResponse.getInt("clothing");
 
                                 //creates intent to move to providerAreaActivity-Hai
                                 Intent intent = new Intent(ProviderAuthenticationActivity.this, ProviderAreaActivity.class);
@@ -66,9 +66,9 @@ public class ProviderAuthenticationActivity extends AppCompatActivity {
                                 intent.putExtra("provider_name", provider_name);
                                 intent.putExtra("provider_address", provider_address);
                                 intent.putExtra("housing_number", housing_number);
-//                                intent.putExtra("housing", housing);
-//                                intent.putExtra("food", food);
-//                                intent.putExtra("clothing", clothing);
+                                intent.putExtra("housing", housing);
+                                intent.putExtra("food", food);
+                                intent.putExtra("clothing", clothing);
 
                                 //Moves to next activity page - Hai
                                 ProviderAuthenticationActivity.this.startActivity(intent);
