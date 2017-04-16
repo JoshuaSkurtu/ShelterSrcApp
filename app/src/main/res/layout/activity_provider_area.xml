@@ -21,14 +21,14 @@
         android:id="@+id/tvAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="16sp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tvWelcome"
         android:ems="10"
-        android:gravity="center_horizontal"
-        android:inputType="textPersonName" />
+        android:gravity="center_horizontal" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,61 +43,77 @@
             android:orientation="vertical" >
 
 
-            <EditText
-                android:id="@+id/etHousingNumber"
+            <TextView
+                android:id="@+id/tvHousingNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:ems="10"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvHousing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvHousingNumber"
+                android:ems="10"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvFood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvHousing"
+                android:ems="10"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvClothing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvFood"
+                android:ems="10"
+                android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/etHousing"
+                android:id="@+id/etUpdateHousingNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/etHousingNumber"
+                android:layout_below="@+id/tvClothing"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <EditText
-                android:id="@+id/etFood"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/etHousing"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-            <EditText
-                android:id="@+id/etClothing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/etFood"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:inputType="number"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:text="" />
 
             <Button
                 android:id="@+id/btnUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_below="@+id/etClothing"
+                android:layout_below="@+id/etUpdateHousingNum"
                 android:layout_centerHorizontal="true"
-                android:text="Update Housing Number"
+                android:text="@string/btnUpdate"
                 android:textSize="24sp" />
         </RelativeLayout>
     </ScrollView>
+
+
 </RelativeLayout>
