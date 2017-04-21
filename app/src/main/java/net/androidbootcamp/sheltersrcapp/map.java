@@ -45,8 +45,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static net.androidbootcamp.sheltersrcapp.R.id.bGuestLogin;
-
-public class map extends AppCompatActivity implements OnMapReadyCallback {
+ /* Created by Joshua Skurtu on 2/19/2017.
+         */
+public class map extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
 
@@ -66,9 +67,42 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
 
     public void markerCreation(LatLng yourPosition, String fTitle) //use this method to add a marker to the list - starts hidden - josh
         {
+            //create JSON method  to provide info from database to the parameters below :"name, address, etc" They are then used to create the providerData class object - Josh
+            //We might also just put it in the ProviderData object and have it called in the constructor.
+            //At this method we are supposed to already have the address, which is how we have the latlng,
+            //It should be called from the oncreate, as well, so that it only happens once. Not sure what the best method would be. - Josh
+
+
+             String providerName = "";
+             String providerAddress="";
+             int housingAvail=1;
+             boolean housingBool =true;
+             boolean foodBool= true;
+             boolean clothingBool=true;
+
+
             Marker fMarker = mMap.addMarker(new MarkerOptions().position(yourPosition).visible(true).title(fTitle));
+            fMarker.setTag(new ProviderData(providerName,providerAddress,housingAvail,housingBool,foodBool,clothingBool)); //Associates the maker with an object for the purpose of storing more data on the location - JOsh
             markerList.add(0, fMarker);
         }
+     public void onMapUpdate(){ //creates markers when updating the map -Josh
+         mMap.clear(); //clear
+
+
+         LatLng testLatLng =  new LatLng(38,-90);
+         markerCreation(testLatLng,"Test Title Field for New Marker");
+         LatLng new1 =  new LatLng(38.01,-90.01);
+         markerCreation(new1, "ABC Shelter");
+         LatLng new2 =  new LatLng(38.7760,-90.5287);
+         markerCreation(new2, "Food Pantry Alpha");
+         LatLng new3 =  new LatLng(37.8,-89.33);
+         markerCreation(new3, "three");
+         LatLng new4 =  new LatLng(38.9,-91);
+         markerCreation(new4, "four");
+         LatLng new5 =  new LatLng(32,-90);
+         markerCreation(new5, "five");
+
+     }
 
     public void showMarkers(LatLng location, float distance) //This then reveals any markers in the range you choose nearby the location - josh
     {
@@ -85,6 +119,20 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
         }
 
     }
+     @Override
+     public boolean onMarkerClick(Marker marker) { //This is called when a user clicks a marker
+
+         ProviderData data= (ProviderData) marker.getTag();//retrieves data stored in ProviderData object - Now we can use this data to show more info when they click a location
+         String providerName = data.providerName;
+         String providerAddress = data.providerAddress;
+         int housingAvail = data.housingAvail;
+         boolean housingBool = data.housingBool;
+         boolean foodBool = data.foodBool;
+         boolean clothingBool = data.clothingBool;
+
+
+         return false;
+     }
 
     private double distance(double latitude, double longitude, double latitude1, double longitude1) {
        //calculates distance between two latlon points - Josh
@@ -158,34 +206,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onMapUpdate(){
-        mMap.clear(); //clear
-        //private static final String LOGIN_REQUEST_URL = "https://haitphan.000webhostapp.com/Login.php";
 
-    //Put Json here
-
-       //create variables containing these:
-        //string providerName=
-        //string providerAddress=
-        //int housingAvail=
-        //bool housingBool=
-        //bool foodBool =
-        //bool clothingBool =
-
-        LatLng testLatLng =  new LatLng(38,-90);
-        markerCreation(testLatLng,"Test Title Field for New Marker");
-        LatLng new1 =  new LatLng(38.01,-90.01);
-        markerCreation(new1, "ABC Shelter");
-        LatLng new2 =  new LatLng(38.7760,-90.5287);
-        markerCreation(new2, "Food Pantry Alpha");
-        LatLng new3 =  new LatLng(37.8,-89.33);
-        markerCreation(new3, "three");
-        LatLng new4 =  new LatLng(38.9,-91);
-        markerCreation(new4, "four");
-        LatLng new5 =  new LatLng(32,-90);
-        markerCreation(new5, "five");
-
-    }
 
     //makes back buton close drawer - Josh
     @Override
@@ -233,15 +254,12 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
 
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         mMap.setMyLocationEnabled(true);
+
+        mMap.setOnMarkerClickListener(this); //Listens for marker click
     }
+
+
 }
