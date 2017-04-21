@@ -20,12 +20,13 @@ public class ProviderAreaActivity extends AppCompatActivity {
 
         //Grab the textView message and Editext from xml - Hai
         //to edit with response from ProviderAuthenticationActivity.java using intent from intent.putExtra - Hai
-        final EditText etHousingNumber = (EditText)findViewById(R.id.etHousingNumber);
-        final EditText etHousing = (EditText)findViewById(R.id.etHousing);
-        final EditText etFood = (EditText)findViewById(R.id.etFood);
-        final EditText etClothing = (EditText)findViewById(R.id.etClothing);
+        final TextView tvHousingNumber = (TextView) findViewById(R.id.tvHousingNumber);
+        final TextView tvHousing = (TextView) findViewById(R.id.tvHousing);
+        final TextView tvFood = (TextView) findViewById(R.id.tvFood);
+        final TextView tvClothing = (TextView) findViewById(R.id.tvClothing);
         final TextView tvWelcome = (TextView)findViewById(R.id.tvWelcome);
         final TextView tvAddress = (TextView)findViewById(R.id.tvAddress);
+        final EditText etUpdateHousing = (EditText)findViewById(R.id.etUpdateHousingNum) ;
 
         //gets intent information from previous page that pulled from response of php - Hai
         Intent intent = getIntent();
@@ -33,6 +34,7 @@ public class ProviderAreaActivity extends AppCompatActivity {
         //Instantiates the variables from intent.putExtra to use
         String providerName = intent.getStringExtra("provider_name");
         String providerAddress = intent.getStringExtra("provider_address");
+        String updateHousingNum = intent.getStringExtra("housing_number");
         int housingNumber = intent.getIntExtra("housing_number", -1);
         int housing = intent.getIntExtra("housing",-1);
         int food = intent.getIntExtra("food", -1);
@@ -41,9 +43,26 @@ public class ProviderAreaActivity extends AppCompatActivity {
         String welcome = "Welcome " + providerName;
         tvWelcome.setText(welcome);
         tvAddress.setText(providerAddress);
-        etHousingNumber.setText(housingNumber + "");
-        etHousing.setText(housing + "");
-        etFood.setText(food + "");
-        etClothing.setText(clothing + "");
+        tvHousingNumber.setText("This is the number of beds: " + housingNumber + "");
+        etUpdateHousing.setText(housingNumber + "");
+
+        if(housing==1){
+            tvHousing.setText("Housing available.");
+        }else{
+            tvHousing.setText("No housing at this location.");
+        }
+        if(food==1){
+            tvFood.setText("Food service available.");
+        }else{
+            tvFood.setText("No food at this location.");
+        }
+        if(clothing==1){
+            tvClothing.setText("Clothing available.");
+        }else{
+            tvClothing.setText("No clothing at this location.");
+        }
+
+
+
     }
 }
