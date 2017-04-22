@@ -14,6 +14,8 @@ public class ProviderData {
     public boolean foodBool;
     public boolean clothingBool;
 
+
+
     public ProviderData(String a, String b, int c, boolean d, boolean e, boolean f){ //constructor -Josh
         providerName = a;
         providerAddress = b;
@@ -21,6 +23,10 @@ public class ProviderData {
         housingBool = d;
         foodBool = e;
         clothingBool = f;
+
+
+
+
 
     }
 }

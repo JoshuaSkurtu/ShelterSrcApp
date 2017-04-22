@@ -17,7 +17,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.design.widget.FloatingActionButton;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,6 +29,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -38,6 +41,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -56,6 +60,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
     FragmentTransaction fragmentTransaction;
     NavigationView navigationView;
     public static List<Marker> markerList = new ArrayList<>();
+     private static final String LOGIN_REQUEST_URL = "https://haitphan.000webhostapp.com/Login.php";
 
 
 
@@ -64,6 +69,53 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
 
 //function needed that populates marker list below based on locations we have in the database in a whileloop maybe
+     public String callServer()
+     {
+         final String providerId = "1";
+         //creates response listener to send to LoginRequest - Hai
+         Response.Listener<String> responseListener = new Response.Listener<String>(){
+             @Override
+             public void onResponse(String response) {
+                 try {
+                     //gathering data from response Listener to json -Hai
+                     JSONObject jsonResponse = new JSONObject(response);
+                     //Sent from php file
+                     boolean success = jsonResponse.getBoolean("success");
+
+                     if (success){
+                         //gets the json reponse that we got in the login.php -Hai
+                         //This is from the mysqli_stmt_fetch($statement) from login.php
+                         String providerName = jsonResponse.getString("providerName");
+
+
+                     } else{
+                         //Creates Error message if they get registration wrong - Hai
+                         AlertDialog.Builder builder = new AlertDialog.Builder(map.this);
+                         builder.setMessage("Login Failed")
+                                 .setNegativeButton("Retry", null)
+                                 .create()
+                                 .show();
+                     }
+                 } catch (JSONException e) {
+                     e.printStackTrace();
+                 }
+
+             }
+         };
+         //Makes a LoginRequest to the server database for username, password information - Hai
+         //Uses the LoginRequest Constructor from LoginRequest.java - Hai
+         MapRequest loginRequest = new MapRequest( providerId, responseListener);
+         RequestQueue queue = Volley.newRequestQueue(map.this);
+         queue.add(loginRequest);
+
+
+
+
+
+     }
+
+
+
 
     public void markerCreation(LatLng yourPosition, String fTitle) //use this method to add a marker to the list - starts hidden - josh
         {
@@ -73,7 +125,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
             //It should be called from the oncreate, as well, so that it only happens once. Not sure what the best method would be. - Josh
 
 
-             String providerName = "";
+             String providerName = fTitle;
              String providerAddress="";
              int housingAvail=1;
              boolean housingBool =true;
@@ -155,6 +207,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_map);
