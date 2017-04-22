@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent guestIntent = new Intent(LoginActivity.this, map.class );
-                        LoginActivity.this.startActivity(guestIntent);
+                LoginActivity.this.startActivity(guestIntent);
             }
         });
         //Button for Login - Hai

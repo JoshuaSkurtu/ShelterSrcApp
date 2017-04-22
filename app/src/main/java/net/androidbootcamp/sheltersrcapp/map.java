@@ -52,7 +52,7 @@ import static net.androidbootcamp.sheltersrcapp.R.id.bGuestLogin;
  /* Created by Joshua Skurtu on 2/19/2017.
          */
 public class map extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
-
+     private String providerName1;
     private GoogleMap mMap;
 
     private DrawerLayout mDrawerLayout;
@@ -85,7 +85,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
                      if (success){
                          //gets the json reponse that we got in the login.php -Hai
                          //This is from the mysqli_stmt_fetch($statement) from login.php
-                         String providerName = jsonResponse.getString("providerName");
+                         providerName1 = jsonResponse.getString("providerName");
 
 
                      } else{
@@ -109,7 +109,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
          queue.add(loginRequest);
 
 
-
+         return providerName1;
 
 
      }
@@ -133,7 +133,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
              boolean clothingBool=true;
 
 
-            Marker fMarker = mMap.addMarker(new MarkerOptions().position(yourPosition).visible(true).title(fTitle));
+            Marker fMarker = mMap.addMarker(new MarkerOptions().position(yourPosition).visible(true).title(providerName1));
             fMarker.setTag(new ProviderData(providerName,providerAddress,housingAvail,housingBool,foodBool,clothingBool)); //Associates the maker with an object for the purpose of storing more data on the location - JOsh
             markerList.add(0, fMarker);
         }
@@ -210,6 +210,45 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
 
         super.onCreate(savedInstanceState);
+
+        final String providerId = "1";
+        //creates response listener to send to LoginRequest - Hai
+        Response.Listener<String> responseListener = new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+                try {
+                    //gathering data from response Listener to json -Hai
+                    JSONObject jsonResponse = new JSONObject(response);
+                    //Sent from php file
+                    boolean success = jsonResponse.getBoolean("success");
+
+                    if (success){
+                        //gets the json reponse that we got in the login.php -Hai
+                        //This is from the mysqli_stmt_fetch($statement) from login.php
+                        providerName1 = jsonResponse.getString("providerName");
+
+
+                    } else{
+                        //Creates Error message if they get registration wrong - Hai
+                        AlertDialog.Builder builder = new AlertDialog.Builder(map.this);
+                        builder.setMessage("Login Failed")
+                                .setNegativeButton("Retry", null)
+                                .create()
+                                .show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        //Makes a LoginRequest to the server database for username, password information - Hai
+        //Uses the LoginRequest Constructor from LoginRequest.java - Hai
+        MapRequest loginRequest = new MapRequest( providerId, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(map.this);
+        queue.add(loginRequest);
+
+
 
         setContentView(R.layout.activity_map);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
