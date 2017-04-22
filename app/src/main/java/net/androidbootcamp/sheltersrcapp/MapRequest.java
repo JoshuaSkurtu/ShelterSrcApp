@@ -33,14 +33,14 @@ import java.util.Map;
         //Only need username and password to check on database - Hai
         //LoginRequest is Constructor to ask for username and password to send to php - Hai
         //This constructor is used by the LoginActivity.java - Hai
-        public MapRequest(String providerId, Response.Listener<String> listener ) {
+        public MapRequest(int providerId, Response.Listener<String> listener ) {
 
             super(Request.Method.POST, MAP_REQUEST_URL, listener, null);
             params = new HashMap<>();
 
             //put data into HashMap-Hai
             //This data is passed to the Login.php
-            params.put("providerId", providerId);
+            params.put("providerId", providerId +"");
 
         }
 

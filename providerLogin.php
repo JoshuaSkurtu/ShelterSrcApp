@@ -2,8 +2,8 @@
 	//this connects to the local xampp local database
 	$servername = "localhost";
 	$dbuser = "id755973_client";
-        $dbpassword = "abc123";
-        $databaseName = "id755973_sheltersrcapp";
+	$dbpassword = "abc123";
+	$databaseName = "id755973_sheltersrcapp";
 	
 	//Make connection to database
 	$conn = mysqli_connect($servername, $dbuser, $dbpassword, $databaseName);
@@ -13,7 +13,7 @@
 	
 	//make query to draw from info from database
 	$sql = mysqli_prepare($conn, "SELECT * FROM Provider WHERE code = ?");
-        mysqli_stmt_bind_param($sql, "s", $code);
+    mysqli_stmt_bind_param($sql, "s", $code);
 	mysqli_stmt_execute($sql);
 	mysqli_stmt_store_result($sql);
 	
