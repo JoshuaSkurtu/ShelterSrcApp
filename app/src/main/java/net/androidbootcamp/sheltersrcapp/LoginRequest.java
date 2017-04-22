@@ -12,7 +12,7 @@ import java.util.Map;
  */
 
 public class LoginRequest extends StringRequest {
-    //gets url from website to access the php - Hai
+    //sends signal to url from web database to access through php - Hai
     private static final String LOGIN_REQUEST_URL = "https://haitphan.000webhostapp.com/Login.php";
     private Map<String, String> params;
 
