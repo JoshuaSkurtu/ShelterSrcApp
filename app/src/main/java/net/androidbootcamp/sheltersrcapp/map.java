@@ -53,6 +53,12 @@ import static net.androidbootcamp.sheltersrcapp.R.id.bGuestLogin;
          */
 public class map extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
      private static String providerName1 = "unchanged";
+     private static String providerAddress1 = "unchanged";
+     private static int housingNumber1 = 0;
+     private static boolean housing1 = false;
+     private static boolean food1= false;
+     private static boolean clothing1 = false;
+
     private GoogleMap mMap;
 
     private DrawerLayout mDrawerLayout;
@@ -68,11 +74,11 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
 
 
-//function needed that populates marker list below based on locations we have in the database in a whileloop maybe
-     public void callServer()
+
+     public void callServer(int providerId)
      {
-         final int providerId = 1;
-         //creates response listener to send to LoginRequest - Hai
+
+         //creates response listener
          Response.Listener<String> responseListener = new Response.Listener<String>(){
              @Override
              public void onResponse(String response) {
@@ -83,13 +89,18 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
                      boolean success = jsonResponse.getBoolean("success");
 
                      if (success){
-                         //gets the json reponse that we got in the login.php -Hai
-                         //This is from the mysqli_stmt_fetch($statement) from login.php
+
                          providerName1 = jsonResponse.getString("provider_name");
+
+                         providerAddress1 = jsonResponse.getString("provider_address");
+                         housingNumber1 = Integer.parseInt(jsonResponse.getString("housing_number"));
+                         housing1 = Boolean.parseBoolean(jsonResponse.getString("housing"));
+                         food1 = Boolean.parseBoolean(jsonResponse.getString("food"));
+                         clothing1 = Boolean.parseBoolean(jsonResponse.getString("clothing"));
 
 
                      } else{
-                         //Creates Error message if they get registration wrong - Hai
+                         //Creates Error message
                          AlertDialog.Builder builder = new AlertDialog.Builder(map.this);
                          builder.setMessage("Login Failed")
                                  .setNegativeButton("Retry", null)
@@ -102,11 +113,12 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
              }
          };
-         //Makes a LoginRequest to the server database for username, password information - Hai
-         //Uses the LoginRequest Constructor from LoginRequest.java - Hai
+
          MapRequest loginRequest = new MapRequest( providerId, responseListener);
          RequestQueue queue = Volley.newRequestQueue(map.this);
          queue.add(loginRequest);
+
+
 
 
          //return providerName1;
@@ -117,42 +129,59 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
 
 
-    public void markerCreation(LatLng yourPosition, String fTitle) //use this method to add a marker to the list - starts hidden - josh
-        {
-            //create JSON method  to provide info from database to the parameters below :"name, address, etc" They are then used to create the providerData class object - Josh
-            //We might also just put it in the ProviderData object and have it called in the constructor.
-            //At this method we are supposed to already have the address, which is how we have the latlng,
-            //It should be called from the oncreate, as well, so that it only happens once. Not sure what the best method would be. - Josh
+   // public void markerCreation(LatLng yourPosition, String fTitle) //use this method to add a marker to the list - starts hidden - josh
+     public void markerCreation(ProviderData provider) {
 
 
-             String providerName = fTitle;
-             String providerAddress="";
-             int housingAvail=1;
-             boolean housingBool =true;
-             boolean foodBool= true;
-             boolean clothingBool=true;
+
+         String location = provider.providerAddress;
+         List<Address> addressList = null;
+         LatLng newGeo = null;
+         if (location != null || !location.equals("")) {
+             Geocoder geocoder = new Geocoder(this);
+
+             try {
+                 addressList = geocoder.getFromLocationName(location, 1);
+                 //if(geocoder.isPresent()){}
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+             Address address = addressList.get(0);
+             newGeo = new LatLng(address.getLatitude(), address.getLongitude());
 
 
-            Marker fMarker = mMap.addMarker(new MarkerOptions().position(yourPosition).visible(true).title(providerName1));
-            fMarker.setTag(new ProviderData(providerName,providerAddress,housingAvail,housingBool,foodBool,clothingBool)); //Associates the maker with an object for the purpose of storing more data on the location - JOsh
-            markerList.add(0, fMarker);
-        }
+         }
+
+         Marker fMarker = mMap.addMarker(new MarkerOptions().position(newGeo).visible(true).title(provider.providerName).snippet(provider.providerAddress));
+         fMarker.setTag(provider); //Associates the marker with an object for the purpose of storing  data on the location - Josh
+         //markerList.add(0, fMarker);
+         markerList.add( fMarker);
+     }
      public void onMapUpdate(){ //creates markers when updating the map -Josh
          mMap.clear(); //clear
+         int index = 1;
+         while(index<6)
+         {
+             callServer(index);
+             ProviderData provider = new ProviderData(providerName1,providerAddress1,housingNumber1, housing1,food1,clothing1);
+             markerCreation(provider);
+
+             index +=1;
+         }
 
 
-         LatLng testLatLng =  new LatLng(38,-90);
-         markerCreation(testLatLng,"Test Title Field for New Marker");
-         LatLng new1 =  new LatLng(38.01,-90.01);
-         markerCreation(new1, "ABC Shelter");
-         LatLng new2 =  new LatLng(38.7760,-90.5287);
-         markerCreation(new2, "Food Pantry Alpha");
-         LatLng new3 =  new LatLng(37.8,-89.33);
-         markerCreation(new3, "three");
-         LatLng new4 =  new LatLng(38.9,-91);
-         markerCreation(new4, "four");
-         LatLng new5 =  new LatLng(32,-90);
-         markerCreation(new5, "five");
+//         LatLng testLatLng =  new LatLng(38,-90);
+//         markerCreation(testLatLng,"Test Title Field for New Marker");
+//         LatLng new1 =  new LatLng(38.01,-90.01);
+//         markerCreation(new1, "ABC Shelter");
+//         LatLng new2 =  new LatLng(38.7760,-90.5287);
+//         markerCreation(new2, "Food Pantry Alpha");
+//         LatLng new3 =  new LatLng(37.8,-89.33);
+//         markerCreation(new3, "three");
+//         LatLng new4 =  new LatLng(38.9,-91);
+//         markerCreation(new4, "four");
+//         LatLng new5 =  new LatLng(32,-90);
+//         markerCreation(new5, "five");
 
      }
 
@@ -211,7 +240,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
         super.onCreate(savedInstanceState);
 
-        callServer();
+        //callServer(2);
+
 
 
 
@@ -302,7 +332,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
             mMap.addMarker(new MarkerOptions().position(latLng).title("Search"));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             onMapUpdate();
-            showMarkers(latLng,200000);
+            showMarkers(latLng,200000000);
 
         }
 
