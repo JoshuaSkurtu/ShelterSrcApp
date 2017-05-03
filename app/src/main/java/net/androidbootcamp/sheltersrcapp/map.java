@@ -1,7 +1,7 @@
 package net.androidbootcamp.sheltersrcapp;
 
 import android.Manifest;
-import android.location.Location;
+import android.app.FragmentManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 
@@ -10,12 +10,9 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.design.widget.FloatingActionButton;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,16 +25,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
@@ -48,9 +40,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.androidbootcamp.sheltersrcapp.R.id.bGuestLogin;
- /* Created by Joshua Skurtu on 2/19/2017.
-         */
+import static android.R.attr.id;
+
+/* Created by Joshua Skurtu on 2/19/2017.
+        */
 public class map extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
      private static String providerName1 = "unchanged";
      private static String providerAddress1 = "unchanged";
@@ -211,6 +204,12 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
          boolean foodBool = data.foodBool;
          boolean clothingBool = data.clothingBool;
 
+         //adding fragment when marker is clicked
+         android.app.FragmentManager fragmentManager = getFragmentManager();
+         android.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+         ProviderFragment providerFragment = new ProviderFragment();
+         fragmentTransaction.add(R.id.provider_frag_container, providerFragment);
+         fragmentTransaction.commit();
 
          return false;
      }

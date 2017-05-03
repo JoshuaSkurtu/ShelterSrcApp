@@ -1,0 +1,108 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.androidbootcamp.sheltersrcapp.ProviderFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textAddress"
+            android:layout_width="363dp"
+            android:layout_height="74dp"
+            android:text="Address"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            tools:layout_editor_absoluteX="11dp"
+            tools:layout_editor_absoluteY="79dp" />
+
+        <TextView
+            android:id="@+id/textClothingBool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Provides Clothing:"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="94dp"
+            tools:layout_editor_absoluteY="422dp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Provides Food:"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="118dp"
+            tools:layout_editor_absoluteY="368dp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Provides Housing:"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="94dp"
+            tools:layout_editor_absoluteY="244dp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Housing Currently Available:"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="305dp" />
+
+        <TextView
+            android:id="@+id/textProviderName"
+            android:layout_width="367dp"
+            android:layout_height="63dp"
+            android:fontFamily="serif"
+            android:text="ProviderName"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="30sp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <Button
+            android:id="@+id/houseAvailButt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            tools:layout_editor_absoluteX="263dp"
+            tools:layout_editor_absoluteY="292dp" />
+
+        <Button
+            android:id="@+id/provClothBut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="61dp"
+            android:text="Yes"
+            app:layout_constraintTop_toTopOf="@+id/provFoodBut"
+            tools:layout_editor_absoluteX="263dp" />
+
+        <Button
+            android:id="@+id/provFoodBut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            tools:layout_editor_absoluteX="263dp"
+            android:layout_marginTop="13dp"
+            app:layout_constraintTop_toBottomOf="@+id/houseAvailButt" />
+
+        <Button
+            android:id="@+id/prvHousingBut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            tools:layout_editor_absoluteX="263dp"
+            tools:layout_editor_absoluteY="231dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
