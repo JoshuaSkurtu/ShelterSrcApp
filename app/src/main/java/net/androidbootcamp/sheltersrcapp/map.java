@@ -204,12 +204,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
          boolean foodBool = data.foodBool;
          boolean clothingBool = data.clothingBool;
 
-         //adding fragment when marker is clicked
-         android.app.FragmentManager fragmentManager = getFragmentManager();
-         android.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-         ProviderFragment providerFragment = new ProviderFragment();
-         fragmentTransaction.add(R.id.provider_frag_container, providerFragment);
-         fragmentTransaction.commit();
+         
 
          return false;
      }

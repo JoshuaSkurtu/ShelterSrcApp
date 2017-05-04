@@ -32,7 +32,7 @@
         android:inputType="textPersonName"
 
         android:text="63303" />
-    android:name="com.google.android.gms.maps.SupportMapFragment" />
+
 
         <fragment
             android:id="@+id/map"
@@ -43,17 +43,11 @@
 
 
     </LinearLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/provider_frag_container"
-
-        >
 
 
 
 
-    </RelativeLayout>
+
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
