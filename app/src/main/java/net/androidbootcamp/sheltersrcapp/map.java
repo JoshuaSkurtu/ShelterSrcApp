@@ -21,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -32,6 +33,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,15 +50,13 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
      private static String providerName1 = "unchanged";
      private static String providerAddress1 = "unchanged";
      private static int housingNumber1 = 0;
-     private static boolean housing1 = false;
-     private static boolean food1= false;
-     private static boolean clothing1 = false;
-
+     private static int housing1 = 1;
+     private static int food1= 1;
+     private static int clothing1 = 1;
     private GoogleMap mMap;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    FragmentTransaction fragmentTransaction;
     NavigationView navigationView;
     public static List<Marker> markerList = new ArrayList<>();
      private static final String LOGIN_REQUEST_URL = "https://haitphan.000webhostapp.com/Login.php";
@@ -65,10 +65,53 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+
+        super.onCreate(savedInstanceState);
+        //callServer(2);
+        setContentView(R.layout.activity_map);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        //adding drawer button - Josh
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        //This section for making navigation menu buttons and switches work - Josh
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.navLogin:
+                        Intent loginIntent = new Intent(map.this, LoginActivity.class);
+
+                        map.this.startActivity(loginIntent);
+
+
+                }
 
 
 
-     public void callServer(int providerId)
+
+                return false;
+            }
+        });
+
+
+    }
+
+
+     public ProviderData callServer(int providerId)
      {
 
          //creates response listener
@@ -87,9 +130,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
                          providerAddress1 = jsonResponse.getString("provider_address");
                          housingNumber1 = Integer.parseInt(jsonResponse.getString("housing_number"));
-                         housing1 = Boolean.parseBoolean(jsonResponse.getString("housing"));
-                         food1 = Boolean.parseBoolean(jsonResponse.getString("food"));
-                         clothing1 = Boolean.parseBoolean(jsonResponse.getString("clothing"));
+                         housing1 = Integer.parseInt(jsonResponse.getString("housing"));
+                         food1 = Integer.parseInt(jsonResponse.getString("food"));
+                         clothing1 = Integer.parseInt(jsonResponse.getString("clothing"));
 
 
                      } else{
@@ -111,10 +154,11 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
          RequestQueue queue = Volley.newRequestQueue(map.this);
          queue.add(loginRequest);
 
+         ProviderData provider = new ProviderData(providerName1,providerAddress1,housingNumber1, housing1,food1,clothing1);
 
 
 
-         //return providerName1;
+         return provider;
 
 
      }
@@ -145,19 +189,72 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
          }
 
-         Marker fMarker = mMap.addMarker(new MarkerOptions().position(newGeo).visible(true).title(provider.providerName).snippet(provider.providerAddress));
+         //Marker fMarker = mMap.addMarker(new MarkerOptions().position(newGeo).visible(true).title(provider.providerName).snippet(provider.providerAddress));
+
+         Marker fMarker = mMap.addMarker(new MarkerOptions().position(newGeo).visible(true));
          fMarker.setTag(provider); //Associates the marker with an object for the purpose of storing  data on the location - Josh
          //markerList.add(0, fMarker);
          markerList.add( fMarker);
+         //Adding custom info window stuff
+         if (mMap != null)
+         {
+             mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                 @Override
+                 public View getInfoWindow(Marker marker) {
+                     return null;
+                 }
+
+                 @Override
+                 public View getInfoContents(Marker marker) {
+                     View v  = getLayoutInflater().inflate(R.layout.info_window, null);
+                     TextView tvProviderView = (TextView) v.findViewById(R.id.tvProviderView);
+                     TextView tvAdressView = (TextView) v.findViewById(R.id.tvAddressView);
+                     TextView tvInfoHousingNumber = (TextView) v.findViewById(R.id.tvInfoHousingNumber);
+                     TextView tvInfoFood = (TextView) v.findViewById(R.id.tvInfoFood);
+                     TextView tvInfoClothing = (TextView) v.findViewById(R.id.tvInfoClothing);
+
+                     ProviderData data= (ProviderData) marker.getTag();//retrieves data stored in ProviderData object - Now we can use this data to show more info when they click a location
+                     String providerName = data.providerName;
+                     String providerAddress = data.providerAddress;
+                     String housingAvail = String.valueOf(data.housingAvail);
+                     int housingBool = data.housingBool;
+                     int foodBool = data.foodBool;
+                     int clothingBool = data.clothingBool;
+
+                     tvProviderView.setText(providerName);
+                     tvAdressView.setText(providerAddress);
+                     if(housingBool==1){
+                         tvInfoHousingNumber.setText("Housing:"+housingAvail);
+                     }
+                     else{
+                         tvInfoHousingNumber.setText("Housing Available:Not Available");
+                     }
+                     if(foodBool==1){
+                         tvInfoFood.setText("Food:Available");
+                     }
+                     else{
+                         tvInfoFood.setText("Food:Not Available");
+                     }
+                     if(clothingBool==1){
+                         tvInfoClothing.setText("Clothing: Available");
+                     }
+                     else{
+                         tvInfoClothing.setText("Clothing: Not Available");
+                     }
+
+
+                     return v;
+                 }
+             });
+
+         }
      }
      public void onMapUpdate(){ //creates markers when updating the map -Josh
          mMap.clear(); //clear
          int index = 1;
-         while(index<6)
+         while(index<7)
          {
-             callServer(index);
-             ProviderData provider = new ProviderData(providerName1,providerAddress1,housingNumber1, housing1,food1,clothing1);
-             markerCreation(provider);
+             markerCreation(callServer(index));
 
              index +=1;
          }
@@ -196,15 +293,15 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
      @Override
      public boolean onMarkerClick(Marker marker) { //This is called when a user clicks a marker
 
-         ProviderData data= (ProviderData) marker.getTag();//retrieves data stored in ProviderData object - Now we can use this data to show more info when they click a location
-         String providerName = data.providerName;
-         String providerAddress = data.providerAddress;
-         int housingAvail = data.housingAvail;
-         boolean housingBool = data.housingBool;
-         boolean foodBool = data.foodBool;
-         boolean clothingBool = data.clothingBool;
+//         ProviderData data= (ProviderData) marker.getTag();//retrieves data stored in ProviderData object - Now we can use this data to show more info when they click a location
+//         String providerName = data.providerName;
+//         String providerAddress = data.providerAddress;
+//         int housingAvail = data.housingAvail;
+//         int housingBool = data.housingBool;
+//         int foodBool = data.foodBool;
+//         int clothingBool = data.clothingBool;
 
-         
+
 
          return false;
      }
@@ -228,56 +325,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
         return Math.sqrt(distance);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
 
-
-        super.onCreate(savedInstanceState);
-
-        //callServer(2);
-
-
-
-
-
-
-        setContentView(R.layout.activity_map);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-        //adding drawer button - Josh
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //This section for making navigation menu buttons and switches work - Josh
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
-                    case R.id.navLogin:
-                        Intent loginIntent = new Intent(map.this, LoginActivity.class);
-
-                        map.this.startActivity(loginIntent);
-
-
-                }
-
-
-
-
-                return false;
-            }
-        });
-
-
-    }
 
     //more for button - Josh
     @Override
@@ -295,7 +343,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
     //makes back buton close drawer - Josh
     @Override
     public void onBackPressed() {
-
+        onMapUpdate();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -323,9 +371,11 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
            }
            Address address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Search"));
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            //mMap.addMarker(new MarkerOptions().position(latLng).title("Search"));
+
+
             onMapUpdate();
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.1f),6000, null);
             showMarkers(latLng,200000000);
 
         }
@@ -336,13 +386,14 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
         mMap = googleMap;
 
 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         mMap.setMyLocationEnabled(true);
 
         mMap.setOnMarkerClickListener(this); //Listens for marker click
+
     }
 
 

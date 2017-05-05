@@ -10,11 +10,11 @@ public class ProviderData {
     public String providerName;
     public String providerAddress;
     public int housingAvail;
-    public boolean housingBool;
-    public boolean foodBool;
-    public boolean clothingBool;
+    public int housingBool;
+    public int foodBool;
+    public int clothingBool;
 
-    public ProviderData(String a, String b, int c, boolean d, boolean e, boolean f){ //constructor -Josh
+    public ProviderData(String a, String b, int c, int d, int e, int f){ //constructor -Josh
         providerName = a;
         providerAddress = b;
         housingAvail= c;
