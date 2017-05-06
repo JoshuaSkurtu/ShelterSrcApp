@@ -178,7 +178,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
              Geocoder geocoder = new Geocoder(this);
 
              try {
-                 addressList = geocoder.getFromLocationName(location, 1);
+                 addressList = geocoder.getFromLocationName(location,1);
                  //if(geocoder.isPresent()){}
              } catch (IOException e) {
                  e.printStackTrace();
@@ -194,9 +194,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
          Marker fMarker = mMap.addMarker(new MarkerOptions().position(newGeo).visible(true));
          fMarker.setTag(provider); //Associates the marker with an object for the purpose of storing  data on the location - Josh
          //markerList.add(0, fMarker);
-         markerList.add( fMarker);
+         //markerList.add( fMarker);
          //Adding custom info window stuff
-         if (mMap != null)
+         if (mMap != null) //changes default info window adapter
          {
              mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
                  @Override
@@ -252,12 +252,14 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
      public void onMapUpdate(){ //creates markers when updating the map -Josh
          mMap.clear(); //clear
          int index = 1;
-         while(index<7)
+         while(index<6)
          {
              markerCreation(callServer(index));
 
              index +=1;
          }
+
+
 
 
 //         LatLng testLatLng =  new LatLng(38,-90);
@@ -354,6 +356,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
     }
 //add ability to search on map - josh
     public void onSearch(View view) throws IOException {
+        //
         mMap.clear(); // Clears all previous markers on map
         EditText location_new = (EditText)findViewById(R.id.TFaddress);
         String location = location_new.getText().toString();
