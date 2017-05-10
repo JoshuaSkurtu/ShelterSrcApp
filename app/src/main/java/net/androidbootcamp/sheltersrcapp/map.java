@@ -166,7 +166,11 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
 
 
-   // public void markerCreation(LatLng yourPosition, String fTitle) //use this method to add a marker to the list - starts hidden - josh
+//        public void markerCreation1(LatLng yourPosition, String fTitle) //use this method to add a marker to the list - starts hidden - josh
+//        {
+//
+//            Marker fMarker = mMap.addMarker(new MarkerOptions().title(fTitle).position(yourPosition).visible(true));
+//        }
      public void markerCreation(ProviderData provider) {
 
 
@@ -196,6 +200,63 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
          //markerList.add(0, fMarker);
          //markerList.add( fMarker);
          //Adding custom info window stuff
+
+     }
+     public void onMapUpdate(){ //creates markers when updating the map -Josh
+         mMap.clear(); //clear
+         int index = 1;
+         while(index<6)
+         {
+             markerCreation(callServer(index));
+             //mMap.animateCamera(CameraUpdateFactory.zoomIn());
+
+             index +=1;
+         }
+
+
+
+
+//         LatLng testLatLng =  new LatLng(38,-90);
+//         markerCreation1(testLatLng,"Test Title Field for New Marker");
+//         LatLng new1 =  new LatLng(38.01,-90.01);
+//         markerCreation1(new1, "ABC Shelter");
+//         LatLng new2 =  new LatLng(38.7760,-90.5287);
+//         markerCreation1(new2, "Food Pantry Alpha");
+//         LatLng new3 =  new LatLng(37.8,-89.33);
+//         markerCreation1(new3, "three");
+//         LatLng new4 =  new LatLng(38.9,-91);
+//         markerCreation1(new4, "four");
+//         LatLng new5 =  new LatLng(32,-90);
+//         markerCreation1(new5, "five");
+
+     }
+
+    public void showMarkers(LatLng location, float distance) //This then reveals any markers in the range you choose nearby the location - josh
+    {
+
+        for(Marker marker : markerList){
+                    LatLng mLocation = marker.getPosition();
+                if(distance(location.latitude,location.longitude, mLocation.latitude,mLocation.longitude)<=distance) //we find distance between two pts to reveal only markers near usS
+                marker.setVisible(true);
+
+            else{
+                marker.setVisible(false);
+            }
+
+        }
+
+    }
+     @Override
+     public boolean onMarkerClick(Marker marker) { //This is called when a user clicks a marker
+
+//         ProviderData data= (ProviderData) marker.getTag();//retrieves data stored in ProviderData object - Now we can use this data to show more info when they click a location
+//         String providerName = data.providerName;
+//         String providerAddress = data.providerAddress;
+//         int housingAvail = data.housingAvail;
+//         int housingBool = data.housingBool;
+//         int foodBool = data.foodBool;
+//         int clothingBool = data.clothingBool;
+
          if (mMap != null) //changes default info window adapter
          {
              mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -213,7 +274,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
                      TextView tvInfoFood = (TextView) v.findViewById(R.id.tvInfoFood);
                      TextView tvInfoClothing = (TextView) v.findViewById(R.id.tvInfoClothing);
 
-                     ProviderData data= (ProviderData) marker.getTag();//retrieves data stored in ProviderData object - Now we can use this data to show more info when they click a location
+                     ProviderData data= (ProviderData) marker.getTag();//retrieves data stored in ProviderData object -
                      String providerName = data.providerName;
                      String providerAddress = data.providerAddress;
                      String housingAvail = String.valueOf(data.housingAvail);
@@ -248,62 +309,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
              });
 
          }
-     }
-     public void onMapUpdate(){ //creates markers when updating the map -Josh
-         mMap.clear(); //clear
-         int index = 1;
-         while(index<6)
-         {
-             markerCreation(callServer(index));
-
-             index +=1;
-         }
-
-
-
-
-//         LatLng testLatLng =  new LatLng(38,-90);
-//         markerCreation(testLatLng,"Test Title Field for New Marker");
-//         LatLng new1 =  new LatLng(38.01,-90.01);
-//         markerCreation(new1, "ABC Shelter");
-//         LatLng new2 =  new LatLng(38.7760,-90.5287);
-//         markerCreation(new2, "Food Pantry Alpha");
-//         LatLng new3 =  new LatLng(37.8,-89.33);
-//         markerCreation(new3, "three");
-//         LatLng new4 =  new LatLng(38.9,-91);
-//         markerCreation(new4, "four");
-//         LatLng new5 =  new LatLng(32,-90);
-//         markerCreation(new5, "five");
-
-     }
-
-    public void showMarkers(LatLng location, float distance) //This then reveals any markers in the range you choose nearby the location - josh
-    {
-
-        for(Marker marker : markerList){
-                    LatLng mLocation = marker.getPosition();
-                if(distance(location.latitude,location.longitude, mLocation.latitude,mLocation.longitude)<=distance) //we find distance between two pts to reveal only markers near usS
-                marker.setVisible(true);
-
-            else{
-                marker.setVisible(false);
-            }
-
-        }
-
-    }
-     @Override
-     public boolean onMarkerClick(Marker marker) { //This is called when a user clicks a marker
-
-//         ProviderData data= (ProviderData) marker.getTag();//retrieves data stored in ProviderData object - Now we can use this data to show more info when they click a location
-//         String providerName = data.providerName;
-//         String providerAddress = data.providerAddress;
-//         int housingAvail = data.housingAvail;
-//         int housingBool = data.housingBool;
-//         int foodBool = data.foodBool;
-//         int clothingBool = data.clothingBool;
-
-
 
          return false;
      }
@@ -378,7 +383,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
 
             onMapUpdate();
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.1f),6000, null);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.1f),2000, null);
             showMarkers(latLng,200000000);
 
         }
