@@ -131,23 +131,23 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
                      //Sent from php file
 
 
-                     for(int i = 0; i<jsonResponse.length();i++) {
+                     for(int i = 1; i<jsonResponse.length();i++) { //changed to 1 to test if first address is crashing it
                          jsonObject1 = jsonResponse.getJSONObject(i);
-                          providerName1 = jsonObject1.optString("provider_name");
-                          providerAddress1 = jsonObject1.optString("provider_address");
-                          housingNumber1 = Integer.parseInt(jsonObject1.optString("housing_number"));
-                          housing1 = Integer.parseInt(jsonObject1.optString("housing"));
-                          food1 = Integer.parseInt(jsonObject1.optString("food"));
-                          clothing1 = Integer.parseInt(jsonObject1.optString("clothing"));
-                         ProviderData provider = new ProviderData(providerName1,providerAddress1,housingNumber1, housing1,food1,clothing1);
-                         providerList.add(i,provider);
+//                          providerName1 = jsonObject1.optString("provider_name");
+//                          providerAddress1 = jsonObject1.optString("provider_address");
+//                          housingNumber1 = Integer.parseInt(jsonObject1.optString("housing_number"));
+//                          housing1 = Integer.parseInt(jsonObject1.optString("housing"));
+//                          food1 = Integer.parseInt(jsonObject1.optString("food"));
+//                          clothing1 = Integer.parseInt(jsonObject1.optString("clothing"));
+//                         ProviderData provider = new ProviderData(providerName1,providerAddress1,housingNumber1, housing1,food1,clothing1);
+                         markerCreation(jsonObject1);
 
                      }
-                     AlertDialog.Builder builder = new AlertDialog.Builder(map.this);
-                     builder.setMessage("OK")
-                             .setNegativeButton("Retry", null)
-                             .create()
-                             .show();
+//                     AlertDialog.Builder builder = new AlertDialog.Builder(map.this);
+//                     builder.setMessage("OK")
+//                             .setNegativeButton("Retry", null)
+//                             .create()
+//                             .show();
                        // List <String> incoming = jsonResponse;
 
 //                         providerName1 = jsonResponse[0].getString("provider_name");
@@ -199,12 +199,14 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 //
 //            Marker fMarker = mMap.addMarker(new MarkerOptions().title(fTitle).position(yourPosition).visible(true));
 //        }
-     public void markerCreation() {
-
-         for(ProviderData provider : providerList) {
+     public void markerCreation(JSONObject jsonObjectLocal) {
 
 
-             String location = provider.providerAddress;
+
+         //String providerAddress11 = jsonObjectLocal.optString("provider_address");
+
+
+             String location = jsonObjectLocal.optString("provider_address");
              List<Address> addressList = null;
              LatLng newGeo = null;
              if (location != null || !location.equals("")) {
@@ -215,6 +217,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
                      //if(geocoder.isPresent()){}
                  } catch (IOException e) {
                      e.printStackTrace();
+
                  }
                  Address address = addressList.get(0);
                  newGeo = new LatLng(address.getLatitude(), address.getLongitude());
@@ -222,20 +225,21 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 
              }
 
+
              //Marker fMarker = mMap.addMarker(new MarkerOptions().position(newGeo).visible(true).title(provider.providerName).snippet(provider.providerAddress));
 
              Marker fMarker = mMap.addMarker(new MarkerOptions().position(newGeo).visible(true));
-             //fMarker.setTag(provider); //Associates the marker with an object for the purpose of storing  data on the location - Josh
+             fMarker.setTag(jsonObjectLocal); //Associates the marker with an object for the purpose of storing  data on the location - Josh
              //markerList.add(0, fMarker);
              //markerList.add( fMarker);
              //Adding custom info window stuff
          }
-     }
+
      public void onMapUpdate(){ //creates markers when updating the map -Josh
          mMap.clear(); //clear
 
              callServer();
-            markerCreation();
+
              //mMap.animateCamera(CameraUpdateFactory.zoomIn());
 
 
@@ -302,29 +306,37 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
                      TextView tvInfoFood = (TextView) v.findViewById(R.id.tvInfoFood);
                      TextView tvInfoClothing = (TextView) v.findViewById(R.id.tvInfoClothing);
 
-                     ProviderData data= (ProviderData) marker.getTag();//retrieves data stored in ProviderData object -
-                     String providerName = data.providerName;
-                     String providerAddress = data.providerAddress;
-                     String housingAvail = String.valueOf(data.housingAvail);
-                     int housingBool = data.housingBool;
-                     int foodBool = data.foodBool;
-                     int clothingBool = data.clothingBool;
+                     JSONObject data= (JSONObject) marker.getTag();//retrieves data stored in ProviderData object -
 
-                     tvProviderView.setText(providerName);
-                     tvAdressView.setText(providerAddress);
-                     if(housingBool==1){
-                         tvInfoHousingNumber.setText("Housing:"+housingAvail);
+                     providerName1 = data.optString("provider_name");
+                     providerAddress1 = data.optString("provider_address");
+                     housingNumber1 = Integer.parseInt(data.optString("housing_number"));
+                     housing1 = Integer.parseInt(data.optString("housing"));
+                     food1 = Integer.parseInt(data.optString("food"));
+                     clothing1 = Integer.parseInt(data.optString("clothing"));
+
+//                     String providerName = data.providerName;
+//                     String providerAddress = data.providerAddress;
+//                     String housingAvail = String.valueOf(data.housingAvail);
+//                     int housingBool = data.housingBool;
+//                     int foodBool = data.foodBool;
+//                     int clothingBool = data.clothingBool;
+
+                     tvProviderView.setText(providerName1);
+                     tvAdressView.setText(providerAddress1);
+                     if(housing1==1){
+                         tvInfoHousingNumber.setText("Housing:"+housingNumber1);
                      }
                      else{
                          tvInfoHousingNumber.setText("Housing Available:Not Available");
                      }
-                     if(foodBool==1){
+                     if(food1==1){
                          tvInfoFood.setText("Food:Available");
                      }
                      else{
                          tvInfoFood.setText("Food:Not Available");
                      }
-                     if(clothingBool==1){
+                     if(clothing1==1){
                          tvInfoClothing.setText("Clothing: Available");
                      }
                      else{
