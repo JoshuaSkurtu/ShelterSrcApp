@@ -30,14 +30,14 @@ import java.util.Map;
 
 
 
-        public MapRequest(int providerId, Response.Listener<String> listener ) {
+        public MapRequest( Response.Listener<String> listener ) {
 
             super(Request.Method.POST, MAP_REQUEST_URL, listener, null);
             params = new HashMap<>();
 
             //put data into HashMap-Hai
             //This data is passed to the Login.php
-            params.put("providerId", providerId +"");
+            //params.put("providerId", providerId +"");
 
         }
 

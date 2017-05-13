@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.support.v7.app.AlertDialog;
+import android.util.JsonReader;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -35,10 +36,12 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,12 +50,7 @@ import static android.R.attr.id;
 /* Created by Joshua Skurtu on 2/19/2017.
         */
 public class map extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
-     private static String providerName1 = "unchanged";
-     private static String providerAddress1 = "unchanged";
-     private static int housingNumber1 = 0;
-     private static int housing1 = 1;
-     private static int food1= 1;
-     private static int clothing1 = 1;
+
     private GoogleMap mMap;
 
     private DrawerLayout mDrawerLayout;
@@ -60,6 +58,14 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
     NavigationView navigationView;
     public static List<Marker> markerList = new ArrayList<>();
      private static final String LOGIN_REQUEST_URL = "https://haitphan.000webhostapp.com/Login.php";
+    private static List<ProviderData> providerList = new ArrayList<>();
+    private JSONObject jsonObject1;
+    private String providerName1;
+    private String providerAddress1;
+    private int housingNumber1 ;
+    private int housing1 ;
+    private int food1;
+    private int clothing1;
 
 
 
@@ -111,7 +117,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
     }
 
 
-     public ProviderData callServer(int providerId)
+     public void callServer()
      {
 
          //creates response listener
@@ -120,29 +126,51 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
              public void onResponse(String response) {
                  try {
                      //gathering data from response Listener to json -Hai
-                     JSONObject jsonResponse = new JSONObject(response);
+                     JSONArray jsonResponse = new JSONArray(response);
+
                      //Sent from php file
-                     boolean success = jsonResponse.getBoolean("success");
-
-                     if (success){
-
-                         providerName1 = jsonResponse.getString("provider_name");
-
-                         providerAddress1 = jsonResponse.getString("provider_address");
-                         housingNumber1 = Integer.parseInt(jsonResponse.getString("housing_number"));
-                         housing1 = Integer.parseInt(jsonResponse.getString("housing"));
-                         food1 = Integer.parseInt(jsonResponse.getString("food"));
-                         clothing1 = Integer.parseInt(jsonResponse.getString("clothing"));
 
 
-                     } else{
-                         //Creates Error message
-                         AlertDialog.Builder builder = new AlertDialog.Builder(map.this);
-                         builder.setMessage("Login Failed")
-                                 .setNegativeButton("Retry", null)
-                                 .create()
-                                 .show();
+                     for(int i = 0; i<jsonResponse.length();i++) {
+                         jsonObject1 = jsonResponse.getJSONObject(i);
+                          providerName1 = jsonObject1.optString("provider_name");
+                          providerAddress1 = jsonObject1.optString("provider_address");
+                          housingNumber1 = Integer.parseInt(jsonObject1.optString("housing_number"));
+                          housing1 = Integer.parseInt(jsonObject1.optString("housing"));
+                          food1 = Integer.parseInt(jsonObject1.optString("food"));
+                          clothing1 = Integer.parseInt(jsonObject1.optString("clothing"));
+                         ProviderData provider = new ProviderData(providerName1,providerAddress1,housingNumber1, housing1,food1,clothing1);
+                         providerList.add(i,provider);
+
                      }
+                     AlertDialog.Builder builder = new AlertDialog.Builder(map.this);
+                     builder.setMessage("OK")
+                             .setNegativeButton("Retry", null)
+                             .create()
+                             .show();
+                       // List <String> incoming = jsonResponse;
+
+//                         providerName1 = jsonResponse[0].getString("provider_name");
+//
+//                         providerAddress1 = jsonResponse.getString("provider_address");
+//                         housingNumber1 = Integer.parseInt(jsonResponse.getString("housing_number"));
+//                         housing1 = Integer.parseInt(jsonResponse.getString("housing"));
+//                         food1 = Integer.parseInt(jsonResponse.getString("food"));
+//                         clothing1 = Integer.parseInt(jsonResponse.getString("clothing"));
+
+//                         AlertDialog.Builder builder = new AlertDialog.Builder(map.this);
+//                         builder.setMessage("")
+//                                 .setNegativeButton("Retry", null)
+//                                 .create()
+//                                 .show();
+//                     } else{
+//                         //Creates Error message
+//                         AlertDialog.Builder builder = new AlertDialog.Builder(map.this);
+//                         builder.setMessage("Login Failed")
+//                                 .setNegativeButton("Retry", null)
+//                                 .create()
+//                                 .show();
+//                     }
                  } catch (JSONException e) {
                      e.printStackTrace();
                  }
@@ -150,15 +178,15 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
              }
          };
 
-         MapRequest loginRequest = new MapRequest( providerId, responseListener);
+         MapRequest loginRequest = new MapRequest( responseListener);
          RequestQueue queue = Volley.newRequestQueue(map.this);
          queue.add(loginRequest);
 
-         ProviderData provider = new ProviderData(providerName1,providerAddress1,housingNumber1, housing1,food1,clothing1);
 
 
 
-         return provider;
+
+
 
 
      }
@@ -171,46 +199,46 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 //
 //            Marker fMarker = mMap.addMarker(new MarkerOptions().title(fTitle).position(yourPosition).visible(true));
 //        }
-     public void markerCreation(ProviderData provider) {
+     public void markerCreation() {
+
+         for(ProviderData provider : providerList) {
 
 
+             String location = provider.providerAddress;
+             List<Address> addressList = null;
+             LatLng newGeo = null;
+             if (location != null || !location.equals("")) {
+                 Geocoder geocoder = new Geocoder(this);
 
-         String location = provider.providerAddress;
-         List<Address> addressList = null;
-         LatLng newGeo = null;
-         if (location != null || !location.equals("")) {
-             Geocoder geocoder = new Geocoder(this);
+                 try {
+                     addressList = geocoder.getFromLocationName(location, 1);
+                     //if(geocoder.isPresent()){}
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                 }
+                 Address address = addressList.get(0);
+                 newGeo = new LatLng(address.getLatitude(), address.getLongitude());
 
-             try {
-                 addressList = geocoder.getFromLocationName(location,1);
-                 //if(geocoder.isPresent()){}
-             } catch (IOException e) {
-                 e.printStackTrace();
+
              }
-             Address address = addressList.get(0);
-             newGeo = new LatLng(address.getLatitude(), address.getLongitude());
 
+             //Marker fMarker = mMap.addMarker(new MarkerOptions().position(newGeo).visible(true).title(provider.providerName).snippet(provider.providerAddress));
 
+             Marker fMarker = mMap.addMarker(new MarkerOptions().position(newGeo).visible(true));
+             //fMarker.setTag(provider); //Associates the marker with an object for the purpose of storing  data on the location - Josh
+             //markerList.add(0, fMarker);
+             //markerList.add( fMarker);
+             //Adding custom info window stuff
          }
-
-         //Marker fMarker = mMap.addMarker(new MarkerOptions().position(newGeo).visible(true).title(provider.providerName).snippet(provider.providerAddress));
-
-         Marker fMarker = mMap.addMarker(new MarkerOptions().position(newGeo).visible(true));
-         fMarker.setTag(provider); //Associates the marker with an object for the purpose of storing  data on the location - Josh
-         //markerList.add(0, fMarker);
-         //markerList.add( fMarker);
-         //Adding custom info window stuff
-
      }
      public void onMapUpdate(){ //creates markers when updating the map -Josh
          mMap.clear(); //clear
-         int index = 1;
-         while(index<6)
-         {
-             markerCreation(callServer(index));
+
+             callServer();
+            markerCreation();
              //mMap.animateCamera(CameraUpdateFactory.zoomIn());
 
-             index +=1;
+
          }
 
 
@@ -229,7 +257,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback, Google
 //         LatLng new5 =  new LatLng(32,-90);
 //         markerCreation1(new5, "five");
 
-     }
+
 
     public void showMarkers(LatLng location, float distance) //This then reveals any markers in the range you choose nearby the location - josh
     {
